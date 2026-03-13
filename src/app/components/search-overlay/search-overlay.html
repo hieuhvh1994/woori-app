@@ -1,0 +1,33 @@
+<div class="search-overlay">
+  <div class="search-header">
+    <div class="search-input-wrapper">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Tìm kiếm"
+        [(ngModel)]="searchQuery"
+        autofocus
+        (keyup.enter)="onSearch()"
+      />
+    </div>
+    <button mat-button class="cancel-btn" (click)="onCancel()">Hủy</button>
+  </div>
+
+  <div class="search-content">
+    <div class="suggestions-title">Đề xuất</div>
+    <div class="suggestions-grid">
+      @for (item of filteredSuggestions(); track item.label) {
+        <div class="suggestion-item">
+          <div class="suggestion-icon">
+            <mat-icon>{{ item.icon }}</mat-icon>
+          </div>
+          <div class="suggestion-label">{{ item.label }}</div>
+        </div>
+      } @empty {
+        <div class="no-results">Không tìm thấy kết quả</div>
+      }
+    </div>
+  </div>
+</div>
+

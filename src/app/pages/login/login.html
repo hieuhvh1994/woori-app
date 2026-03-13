@@ -1,0 +1,57 @@
+<div class="app-shell safe login">
+  <div class="top">
+    <div class="lang">VN</div>
+    <img ngSrc="/won-icon-white.png" alt="WON" width="140" height="88" priority class="brand" />
+  </div>
+
+  <div class="avatarWrap">
+    <img ngSrc="/anonymous-avatar.png"
+         alt="Avatar"
+         width="70" height="70"
+         priority
+         class="avatar" />
+  </div>
+  <div class="name">{{name}} <span class="chev">›</span></div>
+
+  <div class="panel">
+    <div class="row">
+      <mat-form-field class="pw" appearance="fill" floatLabel="auto">
+        <input
+          matInput
+          [(ngModel)]="pw"
+          type="password"
+          placeholder="Nhập mật khẩu"
+        />
+      </mat-form-field>
+
+      <button mat-stroked-button class="iconBtn" disabled>
+        <mat-icon>lock</mat-icon>
+        <div class="small">OTP</div>
+      </button>
+
+      <button mat-stroked-button class="iconBtn" (click)="loginFaceId()" [disabled]="busy">
+        <mat-icon>qr_code_scanner</mat-icon>
+        <div class="small">FaceID</div>
+      </button>
+    </div>
+
+    <button mat-stroked-button class="loginBtn" (click)="loginPassword()" [disabled]="busy">
+      Đăng nhập
+    </button>
+
+    <div class="err" *ngIf="error">{{error}}</div>
+
+    <div class="links">
+      <span>Tìm ID</span>
+      <span>Tìm mật khẩu</span>
+      <span>Đăng ký</span>
+    </div>
+
+    <!-- ✅ Bottom đưa vào trong panel -->
+    <div class="bottom">
+      <div class="bItem"><mat-icon>phonelink_lock</mat-icon><span>Mobile OTP</span></div>
+      <div class="bItem"><mat-icon>chat_bubble_outline</mat-icon><span>Trợ giúp</span></div>
+      <div class="bItem"><mat-icon>menu_book</mat-icon><span>Hướng dẫn</span></div>
+    </div>
+  </div>
+</div>

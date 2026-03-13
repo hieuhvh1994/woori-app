@@ -1,0 +1,55 @@
+<div class="app-shell safe tx">
+  <div class="topbar">
+    <button mat-icon-button (click)="back()"><mat-icon>arrow_back</mat-icon></button>
+    <div class="title">Lịch sử giao dịch</div>
+    <div style="width:40px;"></div>
+  </div>
+
+  @if (!isLoading()) {
+    @if (account; as a) {
+      <div class="acc card-rounded">
+        <div class="pill">{{a.label}}</div>
+        <div class="accTitle">{{a.name}}</div>
+        <div class="accRow">
+          <div class="accNo">{{a.id}} <mat-icon class="copy">content_copy</mat-icon></div>
+          <div class="bal">{{a.currency}} {{a.balance | number}}</div>
+        </div>
+        <div class="accActions">
+          <span>Rút tiền ATM</span><span class="sep">|</span><span>Chuyển tiền</span>
+        </div>
+      </div>
+    }
+
+    <div class="filters">
+      <div class="f card-rounded active">
+        <div class="t">Tất cả</div>
+        <mat-icon>swap_vert</mat-icon>
+      </div>
+      <div class="f card-rounded">
+        <div class="t">Nộp tiền</div>
+        <mat-icon>add_circle_outline</mat-icon>
+      </div>
+      <div class="f card-rounded">
+        <div class="t">Rút tiền</div>
+        <mat-icon>remove_circle_outline</mat-icon>
+      </div>
+    </div>
+
+    <div class="list card-rounded">
+      @for (t of txns; track t) {
+        <div class="item">
+          <div class="left">
+            <div class="tt">{{t.title}}</div>
+            <div class="dd">{{t.dateISO | date:'dd.MM.yyyy'}}</div>
+            <div class="note">{{t.note}}</div>
+          </div>
+
+          <div class="right" [class.pos]="t.amount>=0" [class.neg]="t.amount<0">
+            <div class="amt">{{sign(t.amount)}} {{abs(t.amount) | number}}</div>
+            <div class="rb">{{t.runningBalance | number}}</div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

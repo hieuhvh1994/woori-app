@@ -1,0 +1,291 @@
+<div class="app-shell safe home">
+  <div class="header">
+    <!--    <div class="brand">DEMO</div>-->
+    <img ngSrc="/won-icon.png" alt="WON" width="140" height="88" priority class="brand"/>
+
+    <div class="search" (click)="openSearch()">
+      <mat-icon>search</mat-icon>
+      <span>Tìm kiếm</span>
+    </div>
+
+    <div class="avatar" (click)="goToProfile()">
+      <img ngSrc="/anonymous-avatar.png" alt="Profile" width="40" height="40"/>
+    </div>
+  </div>
+
+  <div class="banner-wrapper">
+    <div class="banner-carousel card-rounded"
+         (touchstart)="onTouchStart($event)"
+         (touchend)="onTouchEnd($event)">
+      <div class="banner-track" [style.transform]="'translateX(-' + currentBannerIndex() * 100 + '%)'">
+        @for (banner of banners; track $index) {
+          <div class="banner-slide">
+            <img [src]="banner.image"
+                 alt="Banner promotion"
+                 class="banner-image"
+                 [style.transform]="'scale(' + banner.zoom + ')'"/>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="banner-indicators">
+      @for (banner of banners; track $index) {
+        <div class="indicator"
+             [class.active]="currentBannerIndex() === $index"
+             (click)="goToBanner($index)"></div>
+      }
+    </div>
+  </div>
+
+  <div class="account-carousel"
+       (touchstart)="onAccountTouchStart($event)"
+       (touchend)="onAccountTouchEnd($event)">
+    <div class="account-track"
+         [style.transform]="'translateX(calc(-' + currentAccountIndex() * 100 + '% - ' + currentAccountIndex() * 14 + 'px))'">
+      @for (a of accounts; track a.id) {
+        <div class="acc card-rounded" (click)="openTx(a)">
+          <div class="acc-header">
+            <div class="pill">{{ a.label }}</div>
+            <div class="accTitle">{{ a.name }}</div>
+          </div>
+          <div class="acc-content">
+            <div class="accNo">
+              <span class="accNo-number">{{ a.id }}</span>
+              <mat-icon class="copy" (mousedown)="$event.stopPropagation()" (click)="copyAccountNumber($event, a.id)">
+                content_copy
+              </mat-icon>
+            </div>
+            <div class="bal">
+              <mat-icon (mousedown)="$event.stopPropagation()"
+                        (click)="toggleBalanceVisibility(); $event.stopPropagation()">
+                @if (balanceVisible()) {
+                  visibility
+                } @else {
+                  visibility_off
+                }
+              </mat-icon>
+              @if (balanceVisible()) {
+                <span><span class="currency">{{ a.currency }}</span> {{ a.balance | number }}</span>
+              } @else {
+                <span><span class="currency">{{ a.currency }}</span> *** ***</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    @if (accounts.length > 1) {
+      <div class="account-indicators">
+        @for (a of accounts; track a.id) {
+          <div class="indicator"
+               [class.active]="currentAccountIndex() === $index"
+               (click)="goToAccount($index)"></div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="grid card-rounded">
+    @for (f of features; track f.label) {
+      <button mat-button class="gItem" (click)="onFeature(f)">
+        <div class="ico" [style.background-color]="f.bgColor || '#fff5ed'">
+          @if (f.image) {
+            <img [src]="f.image" [alt]="f.label" class="feature-image" [class.vietlott-logo]="f.action === 'vietlott'"/>
+          } @else if (f.icon) {
+            <mat-icon>{{ f.icon }}</mat-icon>
+          }
+          @if (f.badge) {
+            <span class="badge" [class.badge-new]="f.badge === 'New'"
+                  [class.badge-hot]="f.badge === 'Hot'">{{ f.badge }}</span>
+          }
+        </div>
+        <div class="lbl">{{ f.label }}</div>
+      </button>
+    }
+  </div>
+
+  <div class="financial-carousel-wrapper">
+    <div class="financial-carousel"
+         (touchstart)="onFinancialTouchStart($event)"
+         (touchend)="onFinancialTouchEnd($event)">
+      <div class="financial-track"
+           [style.transform]="getFinancialTransform()">
+        @for (card of financialCards; track $index) {
+          <div class="financial-slide"
+               [class.slide-first]="$index === 0"
+               [class.slide-overview]="card.type === 'overview'"
+               [class.slide-timeseries]="card.type === 'timeseries'"
+               [class.slide-points]="card.type === 'combinedpoints'">
+            <div class="financial-card card-rounded" style="height: 130px;">
+              @if (card.type === 'overview') {
+                <div class="financial-header">
+                  <span class="financial-title">{{ card.title }}</span>
+                  <mat-icon class="toggle-icon" (click)="toggleFinancialOverview()">
+                    @if (showFinancialOverview()) {
+                      visibility
+                    } @else {
+                      visibility_off
+                    }
+                  </mat-icon>
+                </div>
+
+                @if (showFinancialOverview()) {
+                  <div class="financial-content">
+                    <div class="chart-container">
+                      <div class="chart-bars">
+                        <div class="bar bar-income" [class.bar-empty]="card.income === 0"
+                             [style.height]="card.income > 0 ? (card.income / 20101105 * 100) + '%' : '0'"></div>
+                        <div class="bar bar-saving" [class.bar-empty]="card.savings === 0"
+                             [style.height]="card.savings > 0 ? (card.savings / 20101105 * 100) + '%' : '0'"></div>
+                        <div class="bar bar-expense" [class.bar-empty]="card.expenses === 0"
+                             [style.height]="card.expenses > 0 ? (card.expenses / 20101105 * 100) + '%' : '0'"></div>
+                      </div>
+                    </div>
+
+                    <div class="financial-legend">
+                      <div class="legend-item">
+                        <span class="legend-dot dot-income"></span>
+                        <span class="legend-label">Thu nhập</span>
+                        <span class="legend-value">{{ card.income | number }}</span>
+                      </div>
+                      <div class="legend-item">
+                        <span class="legend-dot dot-savings"></span>
+                        <span class="legend-label">Tiết kiệm</span>
+                        <span class="legend-value savings">{{ card.savings | number }}</span>
+                      </div>
+                      <div class="legend-item">
+                        <span class="legend-dot dot-expense"></span>
+                        <span class="legend-label">Chi tiêu</span>
+                        <span class="legend-value expense">{{ card.expenses | number }}</span>
+                      </div>
+                    </div>
+                  </div>
+                }
+              } @else if (card.type === 'timeseries') {
+                <div class="timeseries-header v2">
+                  <span class="timeseries-date">{{ card.dateRange }}</span>
+
+                  <div class="timeseries-header mid-toggle">
+                    <span class="ts-label expense" [class.active]="timeSeriesMode() === 'expense'">
+                      Chi tiêu
+                    </span>
+
+                    <button type="button" class="ts-toggle-switch" (click)="toggleTimeSeriesMode()"
+                            [class.mode-expense]="timeSeriesMode() === 'expense'"
+                            [class.mode-income]="timeSeriesMode() === 'income'">
+                      <span class="toggle-track">
+                        <span class="toggle-thumb">
+                          @if (timeSeriesMode() === 'expense') {
+                            <mat-icon>south_west</mat-icon>
+                          } @else {
+                            <mat-icon>north_east</mat-icon>
+                          }
+                        </span>
+                      </span>
+                    </button>
+
+                    <span class="ts-label income" [class.active]="timeSeriesMode() === 'income'">
+                      Thu nhập
+                    </span>
+                  </div>
+                </div>
+
+                <div class="timeseries-divider"></div>
+
+                <div class="timeseries-chart">
+                  @for (point of (timeSeriesMode() === 'expense' ? card.expenseData : card.incomeData); track $index) {
+                    <div class="chart-column">
+                      <div class="chart-bar-wrapper">
+                        <div class="chart-bar"
+                             [class.bar-expense]="timeSeriesMode() === 'expense'"
+                             [class.bar-income]="timeSeriesMode() === 'income'"
+                             [class.bar-empty]="point.value === 0"
+                             [style.height]="point.value > 0 ? (point.value / timeSeriesMaxValue() * 100) + '%' : '0'">
+                        </div>
+                      </div>
+                      <div class="chart-label">{{ point.label }}</div>
+                    </div>
+                  }
+                </div>
+              } @else if (card.type === 'combinedpoints') {
+                <div class="combined-points-card">
+                  <div class="point-card-mini">
+                    <img [ngSrc]="card.wpoint.image"
+                         width="100"
+                         height="100"
+                         alt="{{ card.wpoint.title }}"
+                         class="point-card-image"
+                         priority>
+                  </div>
+
+                  <div class="point-card-mini">
+                    <img [ngSrc]="card.cardpoint.image"
+                         width="100"
+                         height="100"
+                         alt="{{ card.cardpoint.title }}"
+                         class="point-card-image"
+                         priority>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (financialCards.length > 1) {
+      <div class="financial-indicators">
+        @for (card of financialCards; track $index) {
+          <div class="indicator"
+               [class.active]="currentFinancialIndex() === $index"
+               (click)="goToFinancialCard($index)"></div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="promotional-banner">
+    <img ngSrc="/images/Hoc-cung-won-app.png"
+         alt="Học cùng WON App"
+         width="400"
+         height="120"
+         class="promo-image"
+         priority>
+  </div>
+</div>
+
+@if (showSearchOverlay()) {
+  <app-search-overlay (close)="closeSearch()"/>
+}
+
+@if (showCopyNotification()) {
+  <div class="copy-notification">
+    <mat-icon>check_circle</mat-icon>
+    <span>Đã sao chép số tài khoản thành công!</span>
+  </div>
+}
+
+<div class="bottom-nav">
+  <button mat-button class="nav-item active">
+    <mat-icon>home</mat-icon>
+    <span>Trang chủ</span>
+  </button>
+  <button mat-button class="nav-item">
+    <mat-icon>dashboard</mat-icon>
+    <span>Sản phẩm</span>
+  </button>
+  <button mat-button class="nav-item scan">
+    <div class="scan-button">
+      <mat-icon>qr_code_scanner</mat-icon>
+    </div>
+  </button>
+  <button mat-button class="nav-item">
+    <mat-icon>notifications</mat-icon>
+    <span>Thông báo</span>
+  </button>
+  <button mat-button class="nav-item">
+    <mat-icon>menu</mat-icon>
+    <span>Dịch vụ</span>
+  </button>
+</div>

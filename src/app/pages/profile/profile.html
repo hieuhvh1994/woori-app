@@ -1,0 +1,80 @@
+<div class="app-shell safe profile">
+  <div class="profile-header">
+    <button mat-icon-button class="back-btn" (click)="goBack()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <h1 class="title">Cài đặt</h1>
+  </div>
+
+  <div class="profile-content">
+    <div class="user-info">
+      <div class="avatar-wrapper">
+        <img ngSrc="/anonymous-avatar.png" alt="Profile" width="120" height="120" class="avatar" />
+        <button class="edit-btn" (click)="onEditAvatar()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <h2 class="user-name">{{ userInfo.name }}</h2>
+      <p class="user-code">My code {{ userInfo.code }}</p>
+    </div>
+
+    <div class="points-card">
+      <div class="points-header">
+        <span class="points-label">Cùng WON Tích điểm -</span>
+        <br>
+        <span class="points-subtitle">ĐỔI TIỀN THƯỞNG</span>
+      </div>
+      <div class="points-value">
+        <span class="currency">VNĐ</span>
+        <span class="amount">{{ userInfo.points }}</span>
+      </div>
+      <div class="points-decoration">
+        <div class="phone-icon"></div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      @for (item of settingsItems; track item.label) {
+        <div class="setting-item" (click)="onSettingItemClick(item.label)">
+          <span class="setting-label">{{ item.label }}</span>
+          <mat-icon>{{ item.icon }}</mat-icon>
+        </div>
+      }
+
+      <div class="setting-item" (click)="onSettingItemClick('Đơn đăng ký đang xử lý')">
+        <span class="setting-label">Đơn đăng ký đang xử lý</span>
+        <span class="badge">0 đơn</span>
+      </div>
+    </div>
+
+    <div class="additional-settings">
+      <div class="setting-row">
+        <span class="setting-label">Ngôn ngữ</span>
+        <button class="language-btn" (click)="onLanguageClick()">VN</button>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">Phương thức đăng nhập</span>
+        <button class="biometric-btn" (click)="onBiometricClick()">
+          <mat-icon>fingerprint</mat-icon>
+        </button>
+      </div>
+
+      <div class="setting-row">
+        <span class="setting-label">Cài đặt rung</span>
+        <div class="toggle-switch" [class.active]="vibrationEnabled()" (click)="toggleVibration()"></div>
+      </div>
+
+      <div class="setting-row" (click)="onMotionBankingClick()" style="cursor: pointer;">
+        <span class="setting-label">Motion Banking</span>
+        <span class="link-text">Chuyển tiền đơn giản</span>
+      </div>
+    </div>
+
+    <button mat-raised-button class="logout-btn" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Đăng xuất
+    </button>
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+.splash{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  background:#ffffff;
+}
+.logo{
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  .dot{ width:46px; height:46px; border-radius:50%; }
+  .a{ background:#7fe3ff; transform: translateX(22px); }
+  .b{ background:#153a9b; }
+  .text{ font-weight:900; font-size:34px; color:#153a9b; letter-spacing:1px; }
+}
+.sub{ color:#9a9a9a; font-weight:600; }

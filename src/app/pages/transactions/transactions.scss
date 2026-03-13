@@ -1,0 +1,75 @@
+.tx{
+  padding: 10px 14px 18px;
+
+  .topbar{ display:flex; align-items:center; gap:10px; }
+  .title{ flex:1; text-align:center; font-weight:900; font-size:22px; color:#666; }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    gap: 20px;
+
+    .loading-text {
+      color: #666;
+      font-size: 16px;
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  .acc{
+    margin-top:12px;
+    background: linear-gradient(135deg, #4d8cff, #3b64d8);
+    color:#fff;
+    padding:16px;
+    .pill{
+      display:inline-block; background: rgba(255,255,255,.9);
+      color:#2f62d6; padding:6px 12px; border-radius:999px; font-weight:800; font-size:13px;
+    }
+    .accTitle{ font-size:24px; font-weight:900; margin-top:8px; }
+    .accRow{ display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+    .accNo{ opacity:.95; display:flex; gap:8px; align-items:center; }
+    .copy{ font-size:18px; opacity:.9; }
+    .bal{ font-size:26px; font-weight:900; }
+    .accActions{ margin-top:14px; display:flex; justify-content:center; gap:16px; opacity:.95; }
+    .sep{ opacity:.7; }
+  }
+
+  .filters{
+    margin-top:12px;
+    display:grid; grid-template-columns: repeat(3, 1fr);
+    gap:10px;
+    .f{
+      background:#fff; padding:12px; text-align:center;
+      display:flex; flex-direction:column; gap:6px; align-items:center;
+      opacity:.65;
+      &.active{ opacity:1; color:#2f62d6; font-weight:900; }
+      .t{ font-weight:900; }
+    }
+  }
+
+  .list{
+    margin-top:12px;
+    background:#fff;
+    padding: 6px 14px;
+
+    .item{
+      display:flex; justify-content:space-between; gap:10px;
+      padding:16px 0;
+      border-bottom:1px solid #eee;
+      &:last-child{ border-bottom:none; }
+    }
+    .tt{ font-weight:900; font-size:20px; color:#666; }
+    .dd{ margin-top:2px; color:#9a9a9a; }
+    .note{ margin-top:6px; color:#6aa7ff; font-weight:800; }
+
+    .right{ text-align:right; min-width:110px; }
+    .amt{ font-weight:900; font-size:22px; }
+    .rb{ margin-top:4px; color:#8a8a8a; font-weight:800; }
+    .pos .amt{ color:#1976d2; }
+    .neg .amt{ color:#d32f2f; }
+  }
+}
