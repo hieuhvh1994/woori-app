@@ -34,9 +34,7 @@
     "@simplewebauthn/browser": "^13.2.2",
     "@types/jquery": "^4.0.0",
     "jquery": "^4.0.0",
-    "ngx-slick-carousel": "^20.0.0",
     "rxjs": "~7.8.0",
-    "slick-carousel": "^1.8.1",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
@@ -44,6 +42,7 @@
     "@angular/cli": "^21.1.5",
     "@angular/compiler-cli": "^21.1.0",
     "@angular/material": "^21.1.5",
+    "angular-cli-ghpages": "^3.0.2",
     "jsdom": "^27.1.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
