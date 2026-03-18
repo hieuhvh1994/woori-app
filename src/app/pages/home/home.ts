@@ -79,10 +79,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Banner carousel
   banners = [
-    { image: '/images/banner_1.png', zoom: 1 },
-    { image: '/images/banner_2.png', zoom: 1 },
-    { image: '/images/banner_3.png', zoom: 1 },
-    { image: '/images/banner_4.png', zoom: 1 },
+    { image: 'images/banner_1.png', zoom: 1 },
+    { image: 'images/banner_2.png', zoom: 1 },
+    { image: 'images/banner_3.png', zoom: 1 },
+    { image: 'images/banner_4.png', zoom: 1 },
   ];
   currentBannerIndex = signal(0);
   private autoSlideInterval?: number;
