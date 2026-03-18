@@ -90,14 +90,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   private touchEndX = 0;
 
   features: Feature[] = [
-    { image: '/images/Logo_Chuyen_tien.png', label: 'Chuyển tiền', bgColor: '#fff5ed' },
-    { image: '/images/Logo_Tiet_kiem.png', label: 'Tiết kiệm', bgColor: '#fef3f4' },
-    { image: '/images/Logo_Vay.png', label: 'Vay', bgColor: '#f0f5ff' },
-    { image: '/images/Logo_Lich_Su_GIao_dich.png', label: 'Lịch sử\ngiao dịch', action: 'tx', bgColor: '#eef3ff' },
-    { image: '/images/Logo_Nap_tien_dien_thoai.png', label: 'Nạp tiền\nđiện thoại', bgColor: '#f5ecfd' },
-    { image: '/images/Logo_Woori_Ting_ting.png', label: 'Woori\nTing Ting', badge: 'New', bgColor: '#fef3f4' },
-    { image: '/images/Logo_The.png', label: 'Thẻ', bgColor: '#eef7fe' },
-    { image: '/images/Logo_Vietlott.png', label: 'Vietlott SMS', badge: 'Hot', bgColor: '#fcf3f4', action: 'vietlott' },
+    { image: 'images/Logo_Chuyen_tien.png', label: 'Chuyển tiền', bgColor: '#fff5ed' },
+    { image: 'images/Logo_Tiet_kiem.png', label: 'Tiết kiệm', bgColor: '#fef3f4' },
+    { image: 'images/Logo_Vay.png', label: 'Vay', bgColor: '#f0f5ff' },
+    { image: 'images/Logo_Lich_Su_GIao_dich.png', label: 'Lịch sử\ngiao dịch', action: 'tx', bgColor: '#eef3ff' },
+    { image: 'images/Logo_Nap_tien_dien_thoai.png', label: 'Nạp tiền\nđiện thoại', bgColor: '#f5ecfd' },
+    { image: 'images/Logo_Woori_Ting_ting.png', label: 'Woori\nTing Ting', badge: 'New', bgColor: '#fef3f4' },
+    { image: 'images/Logo_The.png', label: 'Thẻ', bgColor: '#eef7fe' },
+    { image: 'images/Logo_Vietlott.png', label: 'Vietlott SMS', badge: 'Hot', bgColor: '#fcf3f4', action: 'vietlott' },
   ];
 
   // Financial overview data
@@ -149,14 +149,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         points: 850,
         label: 'Đổi điểm',
         bgColor: 'linear-gradient(135deg, #ffb3d9 0%, #ff8cc5 100%)',
-        image: '/images/W-Point.png',
+        image: 'images/W-Point.png',
       },
       cardpoint: {
         title: 'Card-point',
         points: 0,
         label: 'Đổi điểm',
         bgColor: 'linear-gradient(135deg, #8dd4ff 0%, #5eb8ff 100%)',
-        image: '/images/Card-point.png',
+        image: 'images/Card-point.png',
       },
     },
   ] as const;
