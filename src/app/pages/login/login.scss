@@ -1,5 +1,5 @@
 .login{
-  height: 100dvh;               // Phải dùng height cố định để flex:1 trên .panel hoạt động
+  height: 100%;
   box-sizing: border-box;
   background: url('../../../images/Big_background_won_light.png') no-repeat center top,
               #5a9cf8;
@@ -7,6 +7,19 @@
   display: flex;
   flex-direction: column;
   padding-top: env(safe-area-inset-top);
+  position: relative;
+
+  // Phủ màu xanh lên vùng notch/status bar (tai thỏ) trên iOS Safari
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top);
+    background: #5a9cf8;
+    z-index: 9999;
+  }
 
   --bgBlue: #5a8cf6;
 

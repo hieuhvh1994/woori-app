@@ -1,7 +1,8 @@
 html, body {
-  height: 100%;
+  height: 100svh;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -9,9 +10,17 @@ body {
   overscroll-behavior: none;
 }
 
+html.notch-blue {
+  background: #5a9cf8 !important;
+}
+
 .app-shell {
   max-width: none;
   margin: 0 auto;
+  height: 100svh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   background: #f4f6fb;
   position: relative;
 }

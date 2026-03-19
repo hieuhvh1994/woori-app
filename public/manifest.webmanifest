@@ -5,8 +5,8 @@
   "start_url": "/woori-app/",
   "scope": "/woori-app/",
   "display": "standalone",
-  "background_color": "#2f62d6",
-  "theme_color": "#2f62d6",
+  "background_color": "#5a9cf8",
+  "theme_color": "#5a9cf8",
   "orientation": "portrait",
   "icons": [
     {

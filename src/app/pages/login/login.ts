@@ -41,13 +41,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   get name(): string { return this.auth.username; }
 
   ngOnInit(): void {
-    // Phủ màu xanh lên vùng notch (tai thỏ) trên iPhone
-    this.doc.documentElement.style.background = '#5a9cf8';
+    // Phủ màu xanh lên vùng notch (tai thỏ) — set background trên <html>
+    this.doc.documentElement.classList.add('notch-blue');
+    this.setThemeColor('#5a9cf8');
   }
 
   ngOnDestroy(): void {
-    // Khôi phục lại khi rời khỏi trang login
-    this.doc.documentElement.style.background = '';
+    this.doc.documentElement.classList.remove('notch-blue');
+    this.setThemeColor('#f4f6fb');
+  }
+
+  private setThemeColor(color: string): void {
+    let meta = this.doc.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    if (!meta) {
+      meta = this.doc.createElement('meta');
+      meta.name = 'theme-color';
+      this.doc.head.appendChild(meta);
+    }
+    meta.content = color;
   }
 
 
