@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { PasskeyService } from './passkey';
 
 const LS_KEY = 'demo_banking_logged_in';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private passkey = inject(PasskeyService);
+
   // demo: 1 user cố định (bạn có thể đổi)
   readonly username = 'DAO DUY HIEU';
 
@@ -23,7 +25,15 @@ export class AuthService {
     return ok;
   }
 
-  constructor(private passkey: PasskeyService) {}
+  /** Trình duyệt/thiết bị có hỗ trợ Face ID / Touch ID không? */
+  isFaceIdAvailable(): Promise<boolean> {
+    return this.passkey.isAvailable();
+  }
+
+  /** Người dùng đã đăng ký Face ID trên thiết bị này chưa? */
+  hasFaceIdRegistered(): boolean {
+    return this.passkey.hasRegistered();
+  }
 
   /** Thiết lập passkey lần đầu (Safari sẽ hiện Face ID) */
   async setupFaceId(): Promise<void> {
@@ -33,7 +43,7 @@ export class AuthService {
 
   /** Đăng nhập bằng passkey (Safari sẽ hiện Face ID) */
   async loginWithFaceId(): Promise<void> {
-    await this.passkey.login(this.username);
+    await this.passkey.login();
     localStorage.setItem(LS_KEY, '1');
   }
 }

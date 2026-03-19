@@ -21,25 +21,48 @@
           [(ngModel)]="pw"
           type="password"
           placeholder="Nhập mật khẩu"
+          aria-label="Mật khẩu"
         />
       </mat-form-field>
 
-      <button mat-stroked-button class="iconBtn" disabled>
-        <mat-icon>lock</mat-icon>
+      <button mat-stroked-button class="iconBtn" disabled aria-label="Đăng nhập bằng OTP">
+        <mat-icon aria-hidden="true">lock</mat-icon>
         <div class="small">OTP</div>
       </button>
 
-      <button mat-stroked-button class="iconBtn" (click)="loginFaceId()" [disabled]="busy">
-        <mat-icon>qr_code_scanner</mat-icon>
-        <div class="small">FaceID</div>
-      </button>
+      @if (faceIdAvailable()) {
+        <button
+          mat-stroked-button
+          class="iconBtn"
+          [class.active]="faceIdRegistered()"
+          (click)="loginFaceId()"
+          [disabled]="busy()"
+          [attr.aria-label]="faceIdRegistered() ? 'Đăng nhập bằng Face ID' : 'Bật đăng nhập Face ID'"
+        >
+          <mat-icon aria-hidden="true">face</mat-icon>
+          <div class="small">{{ faceIdLabel() }}</div>
+        </button>
+      } @else {
+        <button mat-stroked-button class="iconBtn" disabled aria-label="Face ID không được hỗ trợ">
+          <mat-icon aria-hidden="true">face</mat-icon>
+          <div class="small">FaceID</div>
+        </button>
+      }
     </div>
 
-    <button mat-stroked-button class="loginBtn" (click)="loginPassword()" [disabled]="busy">
+    <button
+      mat-stroked-button
+      class="loginBtn"
+      (click)="loginPassword()"
+      [disabled]="busy()"
+      aria-label="Đăng nhập bằng mật khẩu"
+    >
       Đăng nhập
     </button>
 
-    <div class="err" *ngIf="error">{{error}}</div>
+    @if (error()) {
+      <div class="err" role="alert">{{ error() }}</div>
+    }
 
     <div class="links">
       <span>Tìm ID</span>
@@ -49,9 +72,11 @@
 
     <!-- ✅ Bottom đưa vào trong panel -->
     <div class="bottom">
-      <div class="bItem"><mat-icon>phonelink_lock</mat-icon><span>Mobile OTP</span></div>
-      <div class="bItem"><mat-icon>chat_bubble_outline</mat-icon><span>Trợ giúp</span></div>
-      <div class="bItem"><mat-icon>menu_book</mat-icon><span>Hướng dẫn</span></div>
+      <div class="bItem"><mat-icon aria-hidden="true">phonelink_lock</mat-icon><span>Mobile OTP</span></div>
+      <div class="bItem"><mat-icon aria-hidden="true">chat_bubble_outline</mat-icon><span>Trợ giúp</span></div>
+      <div class="bItem"><mat-icon aria-hidden="true">menu_book</mat-icon><span>Hướng dẫn</span></div>
     </div>
   </div>
 </div>
+
+

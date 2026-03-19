@@ -1,7 +1,10 @@
-import { Component, inject, ChangeDetectorRef, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component, inject, OnInit, OnDestroy,
+  ChangeDetectionStrategy, signal, computed,
+} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,7 +18,6 @@ import { LoadingService } from '../../core/loading';
 @Component({
   selector: 'app-login',
   imports: [
-    CommonModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -28,22 +30,35 @@ import { LoadingService } from '../../core/loading';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  pw = '';
-  error = '';
-  busy = false;
-
   private auth = inject(AuthService);
   private router = inject(Router);
   private loading = inject(LoadingService);
-  private cdr = inject(ChangeDetectorRef);
   private doc = inject(DOCUMENT);
+
+  pw = '';
+  readonly error = signal('');
+  readonly busy = signal(false);
+
+  /** true khi thiết bị hỗ trợ Face ID / Touch ID qua WebAuthn */
+  readonly faceIdAvailable = signal(false);
+  /** true khi người dùng đã đăng ký passkey trên thiết bị này */
+  readonly faceIdRegistered = signal(false);
+
+  /** Nhãn nút Face ID */
+  readonly faceIdLabel = computed(() =>
+    this.faceIdRegistered() ? 'FaceID' : 'Bật FaceID'
+  );
 
   get name(): string { return this.auth.username; }
 
-  ngOnInit(): void {
-    // Phủ màu xanh lên vùng notch (tai thỏ) — set background trên <html>
+  async ngOnInit(): Promise<void> {
     this.doc.documentElement.classList.add('notch-blue');
     this.setThemeColor('#5a9cf8');
+
+    // Kiểm tra hỗ trợ WebAuthn (platform authenticator = Face ID / Touch ID)
+    const available = await this.auth.isFaceIdAvailable();
+    this.faceIdAvailable.set(available);
+    this.faceIdRegistered.set(this.auth.hasFaceIdRegistered());
   }
 
   ngOnDestroy(): void {
@@ -61,23 +76,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     meta.content = color;
   }
 
-
   loginPassword(): void {
-    this.error = '';
+    this.error.set('');
     this.loading.show();
 
-    // Simulate authentication delay
     setTimeout(() => {
       const ok = this.auth.loginWithPassword(this.pw);
 
       if (!ok) {
         this.loading.hide();
-        this.error = 'Mật khẩu không đúng';
-        this.cdr.detectChanges(); // Manually trigger change detection
+        this.error.set('Mật khẩu không đúng');
         return;
       }
 
-      // Keep loading shown for a bit longer before navigating
       setTimeout(() => {
         this.loading.hide();
         this.router.navigateByUrl('/home');
@@ -85,23 +96,37 @@ export class LoginComponent implements OnInit, OnDestroy {
     }, 1500);
   }
 
+  /**
+   * Nếu chưa đăng ký: hiện prompt Face ID để tạo passkey.
+   * Nếu đã đăng ký: hiện prompt Face ID để đăng nhập.
+   */
   async loginFaceId(): Promise<void> {
-    this.error = '';
-    this.busy = true;
+    this.error.set('');
+    this.busy.set(true);
     try {
-      await this.auth.loginWithFaceId();
+      if (!this.faceIdRegistered()) {
+        // Lần đầu: đăng ký passkey (Safari hỏi "Dùng Face ID để đăng nhập?")
+        await this.auth.setupFaceId();
+        this.faceIdRegistered.set(true);
+        // setupFaceId đã set LS_KEY = '1' → chuyển màn hình
+      } else {
+        // Đã đăng ký: xác thực bằng Face ID
+        await this.auth.loginWithFaceId();
+      }
 
-      // Hiển thị loading 800ms trước khi chuyển màn hình
       this.loading.show();
       setTimeout(() => {
         this.loading.hide();
         this.router.navigateByUrl('/home');
       }, 800);
-    } catch (e: any) {
-      this.error = 'Đăng nhập Face ID thất bại';
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : 'Đăng nhập Face ID thất bại';
+      this.error.set(msg);
       console.error(e);
     } finally {
-      this.busy = false;
+      this.busy.set(false);
     }
   }
 }
+
+

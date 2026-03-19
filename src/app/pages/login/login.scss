@@ -149,6 +149,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &.active {
+      border-color: #5a9cf8;
+      color: #5a9cf8;
+    }
     gap: 2px;
   }
 
