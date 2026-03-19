@@ -1,4 +1,5 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -24,8 +25,9 @@ import { LoadingService } from '../../core/loading';
   ],
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   pw = '';
   error = '';
   busy = false;
@@ -34,8 +36,20 @@ export class LoginComponent {
   private router = inject(Router);
   private loading = inject(LoadingService);
   private cdr = inject(ChangeDetectorRef);
+  private doc = inject(DOCUMENT);
 
   get name(): string { return this.auth.username; }
+
+  ngOnInit(): void {
+    // Phủ màu xanh lên vùng notch (tai thỏ) trên iPhone
+    this.doc.documentElement.style.background = '#5a9cf8';
+  }
+
+  ngOnDestroy(): void {
+    // Khôi phục lại khi rời khỏi trang login
+    this.doc.documentElement.style.background = '';
+  }
+
 
   loginPassword(): void {
     this.error = '';

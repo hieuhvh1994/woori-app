@@ -1,21 +1,23 @@
 .login{
-  min-height: 100vh;
+  height: 100dvh;               // Phải dùng height cố định để flex:1 trên .panel hoạt động
+  box-sizing: border-box;
   background: url('../../../images/Big_background_won_light.png') no-repeat center top,
-              #f4f6fb;
+              #5a9cf8;
   background-size: 150% auto;
   display: flex;
   flex-direction: column;
-  padding-top: 18px;
+  padding-top: env(safe-area-inset-top);
 
   --bgBlue: #5a8cf6;
 
   .top {
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
-    margin-bottom:10px;
-    padding: 0 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-shrink: 0;
+    padding: 6px 16px 0;
+    margin-bottom: 10px;
   }
 
   .lang{
@@ -40,19 +42,17 @@
     opacity: .95;
   }
 
-  .brand{ height:auto; width:200px; transform: translateX(6px);}
+  .brand{ height:auto; width:90px; transform: translateX(3px);}
 
-  .avatarWrap{
-    --sz: 100px;                 // chỉnh kích thước avatar ở đây
+  .avatarWrap {
+    --sz: 90px;
     width: var(--sz);
     height: var(--sz);
-    margin: 0.1px auto 10px;
-
+    flex-shrink: 0;
+    margin: 24px auto 10px;
     border-radius: 50%;
-    overflow: hidden;            // cắt tròn
+    overflow: hidden;
     position: relative;
-
-    // ring bao quanh
     box-shadow: 0 0 0 4px rgba(255,255,255,.55);
     background: #e9edf5;         // nền phía sau ảnh (nếu ảnh png trong suốt)
   }
@@ -67,17 +67,30 @@
     border-radius: 0;            // wrapper đã tròn rồi
   }
 
-  .name{ text-align:center; color:#fff; font-weight:700; font-size:20px; letter-spacing:.5px; }
+  .name {
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: .5px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
   .chev{ opacity:.9; }
 
   .panel {
-    flex: 1;
-    display:flex;
-    flex-direction:column;
+    flex: 1;               // lấp đầy phần còn lại
+    display: flex;
+    flex-direction: column;
     margin-top: 40px;
     background: #fff;
     border-radius: 28px 28px 0 0;
-    padding: 18px 16px 24px;
+    padding: 18px 16px calc(env(safe-area-inset-bottom) + 16px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    // KHÔNG có min-height: 0 → để panel giãn tự nhiên
   }
 
   .row {

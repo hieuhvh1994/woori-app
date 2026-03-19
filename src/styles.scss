@@ -1,15 +1,19 @@
-html, body { height: 100%; }
-body {
+html, body {
+  height: 100%;
   margin: 0;
+  padding: 0;
+}
+body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   background: #f4f6fb;
+  overscroll-behavior: none;
 }
 
 .app-shell {
-  max-width: none;           // gần iPhone 11 (414)
+  max-width: none;
   margin: 0 auto;
-  min-height: 100vh;
   background: #f4f6fb;
+  position: relative;
 }
 
 .safe {
