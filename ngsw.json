@@ -1,0 +1,119 @@
+{
+  "configVersion": 1,
+  "timestamp": 1773887606836,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main-GX2OKSS5.js",
+        "/manifest.webmanifest",
+        "/scripts-KVQYCYOC.js",
+        "/styles-QAFUIZ6C.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/anonymous-avatar.png",
+        "/images/Big_background_won_light.png",
+        "/images/Card-point.png",
+        "/images/Hoc-cung-won-app.png",
+        "/images/Logo_Chuyen_tien.png",
+        "/images/Logo_Lich_Su_GIao_dich.png",
+        "/images/Logo_Nap_tien_dien_thoai.png",
+        "/images/Logo_The.png",
+        "/images/Logo_Tiet_kiem.png",
+        "/images/Logo_Vay.png",
+        "/images/Logo_Vietlott.png",
+        "/images/Logo_Woori_Ting_ting.png",
+        "/images/W-Point.png",
+        "/images/WON Logo.jpg",
+        "/images/WON-APP-IPHONE.png",
+        "/images/Won_background_Light.png",
+        "/images/Won_background_Medium.png",
+        "/images/anonymous_avatar.png",
+        "/images/banner_1.png",
+        "/images/banner_2.png",
+        "/images/banner_3.png",
+        "/images/banner_4.png",
+        "/images/banner_green.png",
+        "/images/won_icon.png",
+        "/images/won_icon_white.png",
+        "/won-icon-white.png",
+        "/won-icon.png",
+        "/won-logo.jpg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/anonymous-avatar.png": "39aa0850fc58c642d846eecbc2d188a1b39c90d3",
+    "/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/images/Big_background_won_light.png": "06094697ffe9f54757056766aed3df1fa7bff0db",
+    "/images/Card-point.png": "72d5edd834d17445f2ba223352d45a36059e86bb",
+    "/images/Hoc-cung-won-app.png": "e294fb68663d3f92cb9a9b60160b762142a50d0d",
+    "/images/Logo_Chuyen_tien.png": "48960741041f428f74d69bcdeca3fc4dc7c88c64",
+    "/images/Logo_Lich_Su_GIao_dich.png": "d47f3bc8b3caead80d2e807a683871624a18b999",
+    "/images/Logo_Nap_tien_dien_thoai.png": "13978ff968d8131a4130c4d06a440ae493f67576",
+    "/images/Logo_The.png": "84d9ee8b3041b807385e8962a919f50ce2f5ff49",
+    "/images/Logo_Tiet_kiem.png": "6289b24dda46b8ed71e44b451dddfac429583356",
+    "/images/Logo_Vay.png": "ae0de85f93fa90535f65cc141d195ab6a311bc7e",
+    "/images/Logo_Vietlott.png": "56ecf899a1ca0d09ca411be6c33842c927e65f1a",
+    "/images/Logo_Woori_Ting_ting.png": "b03e06c801c94bb37450d1080eea50e4f7e526f2",
+    "/images/W-Point.png": "358f134a97099f694db99350601206b4fd248c3d",
+    "/images/WON Logo.jpg": "548b9e3d2d23b84e7fb61e315f7a8c2926b7ece4",
+    "/images/WON-APP-IPHONE.png": "3a09b7c8e909443f7a27792d6a762c20678d49a4",
+    "/images/Won_background_Light.png": "57b4fe9566ba9d8d2868c3db661416e3395a0eb4",
+    "/images/Won_background_Medium.png": "e20426f7fae79702ca05f85641e05df245f8b44d",
+    "/images/anonymous_avatar.png": "39aa0850fc58c642d846eecbc2d188a1b39c90d3",
+    "/images/banner_1.png": "0421617889fe3344dcf7755b13ba8a49ab0039d9",
+    "/images/banner_2.png": "4049e55b4c66d4fab846da8951dac229583a7597",
+    "/images/banner_3.png": "02c2d448ebd751c2ac5d1a00197f28806ea602bd",
+    "/images/banner_4.png": "c7a1d91055e055ed83fa7bdf730cfc17ec149c1b",
+    "/images/banner_green.png": "707d1fd58b7fa5de11f5b9e9e36cc3facca88af9",
+    "/images/won_icon.png": "a8826d17f80d62675c6c8deea159f3135ef0c5fc",
+    "/images/won_icon_white.png": "d51874bf73e7969804f1ca5a834866f2dd61d9b9",
+    "/index.html": "5994f076b2384ea79cd6cdbeb509b3e194aa58ee",
+    "/main-GX2OKSS5.js": "eb0a6e7566ccfe9ecbb45eeda1dd4c1fac400ffe",
+    "/manifest.webmanifest": "9c52f339ea0b7fc1bf47bb15e227715aa13bfb5e",
+    "/scripts-KVQYCYOC.js": "51bdc5fbf84a9705b89f39ad712da0bc9e331e89",
+    "/styles-QAFUIZ6C.css": "beb24b74d505ed67cb2af23fd56859e951d8e214",
+    "/won-icon-white.png": "d51874bf73e7969804f1ca5a834866f2dd61d9b9",
+    "/won-icon.png": "a8826d17f80d62675c6c8deea159f3135ef0c5fc",
+    "/won-logo.jpg": "548b9e3d2d23b84e7fb61e315f7a8c2926b7ece4"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
