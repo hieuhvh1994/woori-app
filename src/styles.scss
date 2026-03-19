@@ -1,12 +1,12 @@
 html, body {
-  height: 100svh;
+  height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  background: #f4f6fb;
+  background: #fff;
+  overflow: hidden;
   overscroll-behavior: none;
 }
 
@@ -17,11 +17,11 @@ html.notch-blue {
 .app-shell {
   max-width: none;
   margin: 0 auto;
-  height: 100svh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  background: #f4f6fb;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #fff;
   position: relative;
 }
 
