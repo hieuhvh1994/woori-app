@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgOptimizedImage } from '@angular/common';
 import { AuthService } from '../../core/auth';
 
 @Component({
   selector: 'app-splash',
   templateUrl: './splash.html',
   styleUrls: ['./splash.scss'],
-  imports: [NgOptimizedImage],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
 })
 export class SplashComponent implements OnInit {
   constructor(private router: Router, private auth: AuthService) {}
