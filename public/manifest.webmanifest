@@ -1,0 +1,29 @@
+{
+  "name": "WON Banking",
+  "short_name": "WON",
+  "description": "Woori Bank Mobile App",
+  "start_url": "/woori-app/",
+  "scope": "/woori-app/",
+  "display": "standalone",
+  "background_color": "#2f62d6",
+  "theme_color": "#2f62d6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/WON-APP-IPHONE.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "images/WON-APP-IPHONE.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/WON-APP-IPHONE.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+

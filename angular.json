@@ -43,6 +43,8 @@
           },
           "configurations": {
             "production": {
+              "serviceWorker": "ngsw-config.json",
+              "baseHref": "/woori-app/",
               "budgets": [
                 {
                   "type": "initial",
