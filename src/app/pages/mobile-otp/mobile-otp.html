@@ -1,0 +1,41 @@
+<div class="otp-page">
+
+  <!-- ── Header xanh ── -->
+  <div class="top-bar">
+    <span class="top-title">Tạo mã Mobile OTP</span>
+  </div>
+
+  <!-- ── Card trắng chính ── -->
+  <div class="main-card">
+
+    <p class="desc">
+      Nhập mã OTP được tạo vào ô nhập OTP<br>trên Internet Banking.
+    </p>
+
+    <!-- Card hiển thị mã OTP -->
+    <div class="otp-card">
+      <span class="otp-label">Mã OTP</span>
+      <span class="otp-code">{{ otpCode() }}</span>
+      <div class="otp-timer-row">
+        <span class="otp-timer-text">Thời gian còn lại</span>
+        <span class="otp-timer-val" [class.expired]="timer() === 0">{{ timerLabel() }}</span>
+      </div>
+    </div>
+
+    <!-- Cảnh báo -->
+    <p class="warning">Lưu ý không tiết lộ mã Mobile OTP cho bất kỳ ai</p>
+
+  </div>
+
+  <!-- spacer -->
+  <div class="spacer"></div>
+
+  <!-- ── Nút Hoàn tất ── -->
+  <div class="footer">
+    <button class="done-btn" (click)="done()" aria-label="Hoàn tất">
+      Hoàn tất
+    </button>
+  </div>
+
+</div>
+

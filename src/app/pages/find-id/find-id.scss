@@ -1,0 +1,281 @@
+.find-id-page {
+  min-height: 100%;
+  min-height: 100dvh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top);
+}
+
+// ── Top bar ──
+.top-bar {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+
+  .top-title {
+    flex: 1;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    color: #111;
+    margin-right: 40px; // offset icon button width để text thực sự căn giữa
+  }
+}
+
+// ── Content ──
+.content {
+  flex: 1 1 auto;
+  padding: 28px 20px 12px;
+  overflow-y: auto;
+}
+
+// ── Heading ──
+.heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.4;
+  margin: 0 0 28px;
+
+  &.account-heading { font-size: 19px; }
+
+  .blue { color: #4a90e2; }
+}
+
+// ── Form field – underline-only style ──
+.field {
+  width: 100%;
+  margin-bottom: 8px;
+
+  // Remove filled background & rounded corners
+  ::ng-deep .mdc-text-field--filled {
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0;
+  }
+
+  // Show only bottom border
+  ::ng-deep .mdc-line-ripple::before {
+    border-bottom-color: #ccc;
+  }
+  ::ng-deep .mdc-line-ripple::after {
+    border-bottom-color: #4a90e2;
+  }
+
+  // Remove the ripple hover background
+  ::ng-deep .mat-mdc-form-field-focus-overlay {
+    background: transparent !important;
+  }
+
+  ::ng-deep input::placeholder { color: #bbb; }
+  ::ng-deep .mat-mdc-form-field-infix { padding: 12px 0 8px; min-height: unset; }
+}
+
+// ── OTP ──
+.info-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f6f8;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+
+  .info-label { font-size: 14px; color: #555; }
+  .info-value  { font-size: 15px; font-weight: 700; color: #4a90e2; }
+}
+
+.send-otp-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
+  border-color: #ccc;
+  color: #333;
+  font-size: 15px;
+  margin-bottom: 18px;
+
+  &:disabled { color: #bbb; border-color: #e0e0e0; }
+}
+
+.otp-field { margin-top: 4px; }
+
+.otp-note {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: flex-start;
+
+  .note-text {
+    flex: 1;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  .timer {
+    font-size: 15px;
+    font-weight: 700;
+    color: #4a90e2;
+    white-space: nowrap;
+    padding-top: 1px;
+
+    &.expired { color: #d32f2f; }
+  }
+}
+
+// ── Footer ──
+.footer {
+  flex-shrink: 0;
+  padding: 8px 20px calc(env(safe-area-inset-bottom) + 16px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.other-method-btn {
+  color: #555;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  mat-icon { font-size: 18px; height: 18px; width: 18px; }
+}
+
+.forgot-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+
+  .forgot-link {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    color: #888;
+    line-height: 1;
+  }
+
+  .info-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #aaa;
+
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+      line-height: 18px;
+    }
+  }
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(40, 40, 40, 0.88);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 10px 14px;
+  border-radius: 10px;
+  width: 260px;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.action-btn {
+  width: 100%;
+  height: 52px;
+  border-radius: 8px;
+  background: #5a9cf8;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 4px;
+
+  &:disabled {
+    background: #c8d9f8;
+    color: #fff;
+  }
+}
+
+// ── Custom Bottom Sheet ──
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+}
+
+.sheet-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  z-index: 1001;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+  animation: slideUp 0.25s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 16px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.sheet-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #111;
+}
+
+.sheet-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sheet-item {
+  display: block;
+  width: 100%;
+  padding: 18px 20px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #f2f2f2;
+  font-size: 15px;
+  color: #222;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+
+  &:last-child { border-bottom: none; }
+  &:active { background: #f5f5f5; }
+}

@@ -9,6 +9,10 @@ import { authGuard } from './core/auth-guard';
 export const routes: Routes = [
   { path: '', component: SplashComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'find-id', loadComponent: () => import('./pages/find-id/find-id').then(m => m.FindIdComponent) },
+  { path: 'forgot-password', loadComponent: () => import('./pages/forgot-password/forgot-password').then(m => m.ForgotPasswordComponent) },
+  { path: 'register', loadComponent: () => import('./pages/register/register').then(m => m.RegisterComponent) },
+  { path: 'mobile-otp', loadComponent: () => import('./pages/mobile-otp/mobile-otp').then(m => m.MobileOtpComponent) },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'transactions/:accountId', component: TransactionsComponent, canActivate: [authGuard] },

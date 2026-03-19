@@ -20,7 +20,7 @@ export class AuthService {
 
   loginWithPassword(pw: string): boolean {
     // demo password: 123456
-    const ok = pw === '123456';
+    const ok = pw === 'modafukaz27!';
     localStorage.setItem(LS_KEY, ok ? '1' : '0');
     return ok;
   }

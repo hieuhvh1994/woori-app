@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.doc.documentElement.classList.remove('notch-blue');
     this.setThemeColor('#f4f6fb');
+    if (this.toastTimer) clearTimeout(this.toastTimer);
   }
 
   private setThemeColor(color: string): void {
@@ -105,12 +106,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.busy.set(true);
     try {
       if (!this.faceIdRegistered()) {
-        // Lần đầu: đăng ký passkey (Safari hỏi "Dùng Face ID để đăng nhập?")
         await this.auth.setupFaceId();
         this.faceIdRegistered.set(true);
-        // setupFaceId đã set LS_KEY = '1' → chuyển màn hình
       } else {
-        // Đã đăng ký: xác thực bằng Face ID
         await this.auth.loginWithFaceId();
       }
 
@@ -126,6 +124,39 @@ export class LoginComponent implements OnInit, OnDestroy {
     } finally {
       this.busy.set(false);
     }
+  }
+
+  /** true khi hiện banner "Quý khách chưa đăng ký A-OTP" */
+  readonly otpToastVisible = signal(false);
+  private toastTimer: ReturnType<typeof setTimeout> | null = null;
+
+  showOtpToast(): void {
+    this.otpToastVisible.set(true);
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => {
+      this.otpToastVisible.set(false);
+    }, 4000);
+  }
+
+  dismissOtpToast(): void {
+    this.otpToastVisible.set(false);
+    if (this.toastTimer) clearTimeout(this.toastTimer);
+  }
+
+  goFindId(): void {
+    this.router.navigateByUrl('/find-id');
+  }
+
+  goForgotPassword(): void {
+    this.router.navigateByUrl('/forgot-password');
+  }
+
+  goRegister(): void {
+    this.router.navigateByUrl('/register');
+  }
+
+  goMobileOtp(): void {
+    this.router.navigateByUrl('/mobile-otp');
   }
 }
 

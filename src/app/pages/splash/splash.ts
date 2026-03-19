@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth';
 
@@ -10,11 +10,14 @@ import { AuthService } from '../../core/auth';
   imports: [],
 })
 export class SplashComponent implements OnInit {
-  constructor(private router: Router, private auth: AuthService) {}
+  private router = inject(Router);
+  private auth = inject(AuthService);
 
   ngOnInit(): void {
+    // Xoá session cũ: mỗi lần mở app phải đăng nhập lại
+    this.auth.logout();
     setTimeout(() => {
-      this.router.navigateByUrl(this.auth.isLoggedInSync() ? '/home' : '/login');
+      this.router.navigateByUrl('/login');
     }, 700);
   }
 }

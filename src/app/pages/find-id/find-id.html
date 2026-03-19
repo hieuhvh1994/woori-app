@@ -1,0 +1,148 @@
+<div class="find-id-page">
+
+  <!-- Header -->
+  <div class="top-bar">
+    <button mat-icon-button (click)="goBack()" aria-label="Quay lại">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span class="top-title">Tìm tên đăng nhập</span>
+  </div>
+
+  <div class="content">
+
+    <!-- STEP: PHONE -->
+    @if (step() === 'phone') {
+      <h2 class="heading">{{ heading() }}</h2>
+      <mat-form-field class="field" appearance="fill" floatLabel="auto">
+        <input matInput type="tel" placeholder="Vui lòng nhập số điện thoại"
+          [value]="phone()" (input)="phone.set($any($event.target).value)"
+          aria-label="Số điện thoại" />
+      </mat-form-field>
+    }
+
+    <!-- STEP: ACCOUNT -->
+    @if (step() === 'account') {
+      <h2 class="heading account-heading">
+        Vui lòng nhập <span class="blue">số tài khoản</span> và <span class="blue">mật khẩu</span>.
+      </h2>
+      <mat-form-field class="field" appearance="fill" floatLabel="auto">
+        <input matInput placeholder="Nhập số tài khoản"
+          [value]="accountNo()" (input)="accountNo.set($any($event.target).value)"
+          aria-label="Số tài khoản" />
+      </mat-form-field>
+      <mat-form-field class="field" appearance="fill" floatLabel="auto">
+        <input matInput type="password" placeholder="Nhập mật khẩu tài khoản"
+          [value]="accountPw()" (input)="accountPw.set($any($event.target).value)"
+          aria-label="Mật khẩu tài khoản" />
+      </mat-form-field>
+    }
+
+    <!-- STEP: EMAIL -->
+    @if (step() === 'email') {
+      <h2 class="heading">{{ heading() }}</h2>
+      <mat-form-field class="field" appearance="fill" floatLabel="auto">
+        <input matInput type="email" placeholder="Vui lòng nhập địa chỉ email"
+          [value]="email()" (input)="email.set($any($event.target).value)"
+          aria-label="Địa chỉ email" />
+      </mat-form-field>
+    }
+
+    <!-- STEP: OTP -->
+    @if (step() === 'otp') {
+      <h2 class="heading">{{ heading() }}</h2>
+
+      <div class="info-card">
+        <span class="info-label">Số điện thoại</span>
+        <span class="info-value">{{ maskedPhone() }}</span>
+      </div>
+
+      <button mat-stroked-button class="send-otp-btn"
+        (click)="sendOtp()"
+        [disabled]="otpSent() && otpTimer() > 0"
+        aria-label="Gửi mã xác thực">
+        Gửi mã xác thực
+      </button>
+
+      <mat-form-field class="field otp-field" appearance="fill" floatLabel="auto">
+        <input matInput type="number" placeholder="Vui lòng nhập mã xác thực"
+          [value]="otp()" (input)="otp.set($any($event.target).value)"
+          aria-label="Mã xác thực" />
+      </mat-form-field>
+
+      <div class="otp-note">
+        <span class="note-text">• Nhập mã xác thực trong vòng 3 phút kể từ thời điểm gửi mã.</span>
+        <span class="timer" [class.expired]="otpTimer() === 0">{{ timerLabel() }}</span>
+      </div>
+    }
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    @if (step() !== 'otp') {
+      <button mat-button class="other-method-btn" (click)="openMethodSheet()">
+        Tìm kiếm bằng hình thức khác
+        <mat-icon>expand_less</mat-icon>
+      </button>
+
+      <div class="forgot-row">
+        <button class="forgot-link" (click)="goForgotPassword()" aria-label="Quên mật khẩu">
+          Quên mật khẩu?
+        </button>
+        <button class="info-btn" (click)="toggleTooltip()" aria-label="Thông tin quên mật khẩu">
+          <mat-icon>info</mat-icon>
+        </button>
+        @if (tooltipVisible()) {
+          <div class="tooltip" role="tooltip">
+            Quý khách không nhớ thông tin số và mật khẩu tài khoản?
+            Vui lòng đến chi nhánh để lấy lại thông tin đã đăng ký.
+          </div>
+        }
+      </div>
+    }
+
+    @if (step() === 'phone') {
+      <button mat-flat-button class="action-btn" (click)="submit()" [disabled]="!canSubmitPhone">Tìm</button>
+    }
+    @if (step() === 'account') {
+      <button mat-flat-button class="action-btn" (click)="submit()" [disabled]="!canSubmitAccount">Tìm</button>
+    }
+    @if (step() === 'email') {
+      <button mat-flat-button class="action-btn" (click)="submit()" [disabled]="!canSubmitEmail">Tìm</button>
+    }
+    @if (step() === 'otp') {
+      <button mat-flat-button class="action-btn" (click)="submit()" [disabled]="!canConfirmOtp">Xác nhận</button>
+    }
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     Custom Bottom Sheet (inline, fixed)
+══════════════════════════════════════ -->
+@if (sheetOpen()) {
+  <!-- Backdrop -->
+  <div class="sheet-backdrop" (click)="closeSheet()" aria-hidden="true"></div>
+
+  <!-- Sheet panel -->
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-label="Tìm ID bằng">
+    <div class="sheet-header">
+      <button mat-icon-button (click)="closeSheet()" aria-label="Đóng">
+        <mat-icon>close</mat-icon>
+      </button>
+      <span class="sheet-title">Tìm ID bằng</span>
+    </div>
+    <ul class="sheet-list" role="list">
+      <li role="listitem">
+        <button class="sheet-item" (click)="pickMethod('account')">Tài khoản/Mật khẩu tài khoản</button>
+      </li>
+      <li role="listitem">
+        <button class="sheet-item" (click)="pickMethod('phone')">Số điện thoại di động</button>
+      </li>
+      <li role="listitem">
+        <button class="sheet-item" (click)="pickMethod('email')">Email</button>
+      </li>
+    </ul>
+  </div>
+}
+

@@ -1,0 +1,92 @@
+<div class="reg-page">
+
+  <!-- ── Header xanh ── -->
+  <div class="top-bar">
+    <button class="back-btn" (click)="goBack()" aria-label="Quay lại">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span class="top-title">Đăng ký</span>
+    <button class="cancel-btn" (click)="cancel()">Hủy</button>
+  </div>
+
+  <!-- ── Card trắng bo góc ── -->
+  <div class="card">
+
+    <h2 class="heading">Nhập <span class="blue">số điện thoại</span></h2>
+
+    <!-- Input SĐT -->
+    <div class="phone-box" [class.phone-box--error]="phoneError()">
+      <input
+        class="phone-input"
+        type="tel"
+        inputmode="numeric"
+        placeholder="Nhập số điện thoại"
+        [value]="phone()"
+        (input)="onPhoneInput($any($event.target).value)"
+        aria-label="Số điện thoại"
+        aria-describedby="phone-err"
+      />
+      @if (phone().length > 0) {
+        <button class="clear-btn" (click)="clearPhone()" aria-label="Xoá">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      }
+    </div>
+
+    <!-- Lỗi -->
+    @if (phoneError()) {
+      <p id="phone-err" class="err-text" role="alert">Vui lòng nhập đúng số điện thoại</p>
+    }
+
+    <!-- Gửi mã -->
+    <div class="send-row">
+      <button
+        class="send-btn"
+        [disabled]="!isPhoneValid() || (otpSent() && otpTimer() > 0)"
+        (click)="sendOtp()"
+        aria-label="Gửi mã xác thực"
+      >
+        Gửi mã xác thực
+        <span class="send-icon"><mat-icon>chevron_right</mat-icon></span>
+      </button>
+    </div>
+
+    <!-- Input OTP -->
+    <div class="otp-wrap">
+      <input
+        class="otp-input"
+        type="number"
+        inputmode="numeric"
+        placeholder="Nhập mã xác thực"
+        [value]="otp()"
+        (input)="otp.set($any($event.target).value)"
+        aria-label="Mã xác thực"
+      />
+      <div class="otp-line"></div>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer-row">
+      <span class="timer-label">Mã xác thực sẽ hết hiệu lực sau</span>
+      <span class="timer-val" [class.expired]="otpTimer() === 0">{{ timerLabel() }}</span>
+    </div>
+
+  </div>
+
+  <!-- spacer -->
+  <div class="spacer"></div>
+
+  <!-- ── Nút Tiếp ── -->
+  <div class="footer">
+    <button
+      class="next-btn"
+      [disabled]="!canNext()"
+      (click)="submit()"
+      aria-label="Tiếp tục đăng ký"
+    >
+      Tiếp
+    </button>
+  </div>
+
+</div>
+

@@ -25,7 +25,7 @@
         />
       </mat-form-field>
 
-      <button mat-stroked-button class="iconBtn" disabled aria-label="Đăng nhập bằng OTP">
+      <button mat-stroked-button class="iconBtn" (click)="showOtpToast()" aria-label="Đăng nhập bằng OTP">
         <mat-icon aria-hidden="true">lock</mat-icon>
         <div class="small">OTP</div>
       </button>
@@ -65,18 +65,35 @@
     }
 
     <div class="links">
-      <span>Tìm ID</span>
-      <span>Tìm mật khẩu</span>
-      <span>Đăng ký</span>
+      <button class="link-btn" (click)="goFindId()">Tìm ID</button>
+      <button class="link-btn" (click)="goForgotPassword()">Tìm mật khẩu</button>
+      <button class="link-btn" (click)="goRegister()">Đăng ký</button>
     </div>
 
-    <!-- ✅ Bottom đưa vào trong panel -->
     <div class="bottom">
-      <div class="bItem"><mat-icon aria-hidden="true">phonelink_lock</mat-icon><span>Mobile OTP</span></div>
-      <div class="bItem"><mat-icon aria-hidden="true">chat_bubble_outline</mat-icon><span>Trợ giúp</span></div>
-      <div class="bItem"><mat-icon aria-hidden="true">menu_book</mat-icon><span>Hướng dẫn</span></div>
+      <button class="bItem" (click)="goMobileOtp()" aria-label="Mobile OTP">
+        <mat-icon aria-hidden="true">phonelink_lock</mat-icon>
+        <span>Mobile OTP</span>
+      </button>
+      <div class="bItem">
+        <mat-icon aria-hidden="true">chat_bubble_outline</mat-icon>
+        <span>Trợ giúp</span>
+      </div>
+      <div class="bItem">
+        <mat-icon aria-hidden="true">menu_book</mat-icon>
+        <span>Hướng dẫn</span>
+      </div>
     </div>
   </div>
 </div>
 
+@if (otpToastVisible()) {
+  <div class="otp-toast" role="alert" aria-live="assertive">
+    <mat-icon class="toast-icon" aria-hidden="true">warning_amber</mat-icon>
+    <span class="toast-text">Quý khách chưa đăng ký A-OTP.</span>
+    <button class="toast-close" (click)="dismissOtpToast()" aria-label="Đóng thông báo">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+}
 
