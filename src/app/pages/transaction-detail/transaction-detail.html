@@ -3,71 +3,60 @@
     <!-- Top bar -->
     <div class="topbar">
       <button mat-icon-button (click)="back()" aria-label="Quay lại">
-        <mat-icon>arrow_back_ios</mat-icon>
+        <mat-icon>chevron_left</mat-icon>
       </button>
       <div class="title">Chi tiết giao dịch</div>
       <div class="topbar-spacer"></div>
     </div>
 
-    <!-- Amount card -->
-    <div class="amt-card" [class.pos]="t.amount >= 0" [class.neg]="t.amount < 0">
-      <div class="amt-title">{{ t.title }}</div>
-      <div class="amt-currency">VND</div>
-      <div class="amt-value">{{ sign(t.amount) }}{{ abs(t.amount) | number }}</div>
-      <div class="amt-date">{{ t.dateISO | date:'dd.MM.yyyy' }}</div>
+    <!-- Main content card -->
+    <div class="main-card">
+
+      <!-- Logo -->
+      <div class="logo-row">
+        <img src="Won-banner.png" alt="Woori Bank logo" class="bank-logo" />
+      </div>
+
+      <!-- Status -->
+      <div class="status-text">Giao dịch thành công</div>
+
+      <!-- Amount pill -->
+      <div class="amt-pill">
+        <span class="amt-currency">VND</span>
+        <span class="amt-sign-value">{{ sign(t.amount) }}{{ abs(t.amount) | number }}</span>
+      </div>
+
+      <!-- Date & time -->
+      <div class="datetime-row">
+        <span>{{ t.dateISO | date:'dd/MM/yyyy' }}</span>
+        <span class="time-sep"></span>
+        <span>{{ t.timeStr ?? '00:00:00' }}</span>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- Sender account section -->
+      <div class="section-label">Tài khoản chuyển</div>
+      <div class="account-box">
+        <div class="account-bank">{{ t.counterpartyBank ?? 'WOORI BANK' }}</div>
+        <div class="account-row">
+          <span class="account-name">{{ t.counterpartyName ?? t.title }}</span>
+          <span class="account-number">{{ t.counterpartyAccount ?? '' }}</span>
+        </div>
+      </div>
+
+      <!-- Transfer note section -->
+      <div class="section-label">Nội dung chuyển tiền</div>
+      <div class="note-box">{{ t.transferNote ?? t.title }}</div>
+
     </div>
 
-    <!-- Detail card -->
-    <div class="detail-card">
-
-      <!-- Tag row -->
-      <div class="tag-row" [class.debit]="t.amount < 0" [class.credit]="t.amount >= 0">
-        <mat-icon class="tag-icon">local_offer</mat-icon>
-        <span class="tag-label">{{ t.note ?? 'Chưa gắn thẻ' }}</span>
-        <span class="tag-sep">|</span>
-        <button class="tag-memo-btn" aria-label="Ghi chú">
-          <mat-icon class="tag-memo-icon">loyalty</mat-icon>
-        </button>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- Info rows -->
-      <div class="info-row">
-        <span class="info-label">Nội dung</span>
-        <span class="info-value">{{ t.title }}</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Ngày giao dịch</span>
-        <span class="info-value">{{ t.dateISO | date:'dd.MM.yyyy' }}</span>
-      </div>
-      @if (t.refNo) {
-        <div class="info-row">
-          <span class="info-label">Số tham chiếu</span>
-          <span class="info-value">{{ t.refNo }}</span>
+    <!-- Bottom action bar -->
+    <div class="action-bar">
+      <button class="action-btn" aria-label="Chia sẻ">
+        <div class="action-icon-wrap">
+          <mat-icon>ios_share</mat-icon>
         </div>
-      }
-      @if (t.channel) {
-        <div class="info-row">
-          <span class="info-label">Kênh giao dịch</span>
-          <span class="info-value">{{ t.channel }}</span>
-        </div>
-      }
-      @if (t.runningBalance !== undefined) {
-        <div class="info-row">
-          <span class="info-label">Số dư sau GD</span>
-          <span class="info-value">
-            <span class="rb-currency">VND</span>
-            {{ t.runningBalance | number }}
-          </span>
-        </div>
-      }
-    </div>
-
-    <!-- Share button -->
-    <div class="share-bar">
-      <button class="share-btn" aria-label="Chia sẻ giao dịch">
-        <mat-icon>share</mat-icon>
         <span>Chia sẻ</span>
       </button>
     </div>
