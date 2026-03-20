@@ -1,5 +1,5 @@
-import { Component, signal, OnDestroy, OnInit, computed } from '@angular/core';
-import { CommonModule, NgOptimizedImage, DecimalPipe } from '@angular/common';
+import { Component, signal, OnDestroy, OnInit, computed, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, NgOptimizedImage, DecimalPipe, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -192,12 +192,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.accounts = this.data.getAccounts();
   }
 
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly boundSetAppHeight = () => this.setAppHeight();
+
+  private setAppHeight(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+    }
+  }
+
   ngOnInit() {
+    this.setAppHeight();
+    window.addEventListener('resize', this.boundSetAppHeight);
     this.startAutoSlide();
   }
 
 
   ngOnDestroy() {
+    window.removeEventListener('resize', this.boundSetAppHeight);
     this.stopAutoSlide();
     if (this.copyNotificationTimeout) {
       clearTimeout(this.copyNotificationTimeout);

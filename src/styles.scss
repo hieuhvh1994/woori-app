@@ -2,12 +2,21 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  /* Chặn pinch-zoom ở cấp CSS */
+  touch-action: pan-x pan-y;
 }
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   background: #fff;
   overflow: hidden;
   overscroll-behavior: none;
+  /* Chặn double-tap zoom trên iOS */
+  -webkit-text-size-adjust: 100%;
+  touch-action: pan-x pan-y;
+}
+app-root {
+  display: block;
+  height: 100%;
 }
 
 html.notch-blue {
@@ -17,9 +26,7 @@ html.notch-blue {
 .app-shell {
   max-width: none;
   margin: 0 auto;
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
+  height: 100%;
   overflow: visible;
   background: #fff;
   position: relative;
