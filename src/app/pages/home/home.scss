@@ -1,9 +1,9 @@
 .home{
-  padding: 0 0 80px;
+  padding: 0 0 calc(96px + env(safe-area-inset-bottom));
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  height: var(--app-height, 100dvh);
+  min-height: var(--app-height, 100dvh);
   box-sizing: border-box;
 
   .header{
@@ -971,15 +971,16 @@
 
 .bottom-nav {
   position: fixed;
-  bottom: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   background: #fff;
   border-top: 1px solid #e9e9ee;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 6px 0 calc(4px + env(safe-area-inset-bottom));
+  min-height: 72px;
+  padding: 6px 0 4px;
   z-index: 100;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
 

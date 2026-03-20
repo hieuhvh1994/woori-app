@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   padding-top: env(safe-area-inset-top);
+  padding-bottom: 0;
   position: relative;
 
   // Phủ màu xanh lên vùng notch/status bar (tai thỏ) trên iOS Safari

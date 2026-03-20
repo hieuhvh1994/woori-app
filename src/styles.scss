@@ -26,7 +26,7 @@ html.notch-blue {
 .app-shell {
   max-width: none;
   margin: 0 auto;
-  height: 100%;
+  min-height: var(--app-height, 100dvh);
   overflow: visible;
   background: #fff;
   position: relative;
@@ -34,6 +34,9 @@ html.notch-blue {
 
 .safe {
   padding-top: env(safe-area-inset-top);
+}
+
+.safe-bottom {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -51,4 +54,3 @@ a, button { -webkit-tap-highlight-color: transparent; }
     overflow: hidden;
   }
 }
-
