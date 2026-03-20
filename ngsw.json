@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1774006389997,
+  "timestamp": 1774006912757,
   "index": "/woori-app/index.html",
   "assetGroups": [
     {
@@ -24,7 +24,7 @@
         "/woori-app/chunk-Y53TJNPG.js",
         "/woori-app/favicon.ico",
         "/woori-app/index.html",
-        "/woori-app/main-OLTGLM7D.js",
+        "/woori-app/main-SYAHZGQA.js",
         "/woori-app/manifest.webmanifest",
         "/woori-app/scripts-KVQYCYOC.js",
         "/woori-app/styles-Y4JVAX5V.css"
@@ -114,8 +114,8 @@
     "/woori-app/images/banner_green.png": "707d1fd58b7fa5de11f5b9e9e36cc3facca88af9",
     "/woori-app/images/won_icon.png": "a8826d17f80d62675c6c8deea159f3135ef0c5fc",
     "/woori-app/images/won_icon_white.png": "090543ab0338adeb764b9aab59420de0e6f0b1b1",
-    "/woori-app/index.html": "902a501d7cf4f8b0df9df85987f2b199db8e6318",
-    "/woori-app/main-OLTGLM7D.js": "1afe66d4bb3bb3827454dd982b7aa45d8815eea3",
+    "/woori-app/index.html": "bc3678fc91e195afaf3d66f510b348e02b0dcf74",
+    "/woori-app/main-SYAHZGQA.js": "434aae3dbaa7cff1d2ef77aeedaa45b608f10640",
     "/woori-app/manifest.webmanifest": "bfa3b980a4f810287c23b151d9f8d9842c90daa3",
     "/woori-app/scripts-KVQYCYOC.js": "51bdc5fbf84a9705b89f39ad712da0bc9e331e89",
     "/woori-app/styles-Y4JVAX5V.css": "8edd883897325ea740e1a200d982bbff46983c4d",
