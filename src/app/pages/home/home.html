@@ -259,6 +259,32 @@
   <app-search-overlay (close)="closeSearch()"/>
 }
 
+@if (showAccountPicker()) {
+  <!-- Backdrop -->
+  <div class="picker-backdrop" (click)="closeAccountPicker()" aria-hidden="true"></div>
+
+  <!-- Bottom sheet -->
+  <div class="account-picker-sheet" role="dialog" aria-modal="true" aria-label="Chọn tài khoản">
+    <div class="sheet-handle"></div>
+    <div class="sheet-list">
+      @for (a of accounts; track a.id) {
+        @if (a.label !== 'Thẻ') {
+          <button class="sheet-item" (click)="openTx(a)">
+            <div class="sheet-item-top">
+              <span class="sheet-pill">{{ a.label }}</span>
+              <span class="sheet-name">{{ a.name }}</span>
+            </div>
+            <div class="sheet-item-bottom">{{ a.id }} [{{ a.currency }}]</div>
+          </button>
+          @if (!$last) {
+            <div class="sheet-divider"></div>
+          }
+        }
+      }
+    </div>
+  </div>
+}
+
 @if (showCopyNotification()) {
   <div class="copy-notification">
     <mat-icon>check_circle</mat-icon>

@@ -1,0 +1,79 @@
+<div class="td-shell">
+  @if (txn(); as t) {
+    <!-- Top bar -->
+    <div class="topbar">
+      <button mat-icon-button (click)="back()" aria-label="Quay lại">
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+      <div class="title">Chi tiết giao dịch</div>
+      <div class="topbar-spacer"></div>
+    </div>
+
+    <!-- Amount card -->
+    <div class="amt-card" [class.pos]="t.amount >= 0" [class.neg]="t.amount < 0">
+      <div class="amt-title">{{ t.title }}</div>
+      <div class="amt-currency">VND</div>
+      <div class="amt-value">{{ sign(t.amount) }}{{ abs(t.amount) | number }}</div>
+      <div class="amt-date">{{ t.dateISO | date:'dd.MM.yyyy' }}</div>
+    </div>
+
+    <!-- Detail card -->
+    <div class="detail-card">
+
+      <!-- Tag row -->
+      <div class="tag-row" [class.debit]="t.amount < 0" [class.credit]="t.amount >= 0">
+        <mat-icon class="tag-icon">local_offer</mat-icon>
+        <span class="tag-label">{{ t.note ?? 'Chưa gắn thẻ' }}</span>
+        <span class="tag-sep">|</span>
+        <button class="tag-memo-btn" aria-label="Ghi chú">
+          <mat-icon class="tag-memo-icon">loyalty</mat-icon>
+        </button>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Info rows -->
+      <div class="info-row">
+        <span class="info-label">Nội dung</span>
+        <span class="info-value">{{ t.title }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Ngày giao dịch</span>
+        <span class="info-value">{{ t.dateISO | date:'dd.MM.yyyy' }}</span>
+      </div>
+      @if (t.refNo) {
+        <div class="info-row">
+          <span class="info-label">Số tham chiếu</span>
+          <span class="info-value">{{ t.refNo }}</span>
+        </div>
+      }
+      @if (t.channel) {
+        <div class="info-row">
+          <span class="info-label">Kênh giao dịch</span>
+          <span class="info-value">{{ t.channel }}</span>
+        </div>
+      }
+      @if (t.runningBalance !== undefined) {
+        <div class="info-row">
+          <span class="info-label">Số dư sau GD</span>
+          <span class="info-value">
+            <span class="rb-currency">VND</span>
+            {{ t.runningBalance | number }}
+          </span>
+        </div>
+      }
+    </div>
+
+    <!-- Share button -->
+    <div class="share-bar">
+      <button class="share-btn" aria-label="Chia sẻ giao dịch">
+        <mat-icon>share</mat-icon>
+        <span>Chia sẻ</span>
+      </button>
+    </div>
+
+  } @else {
+    <div class="not-found">Không tìm thấy giao dịch</div>
+  }
+</div>
+

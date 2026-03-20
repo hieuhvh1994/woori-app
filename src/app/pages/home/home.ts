@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   accounts: Account[] = [];
   showSearchOverlay = signal(false);
   showCopyNotification = signal(false);
+  showAccountPicker = signal(false);
 
   // Account carousel
   currentAccountIndex = signal(0);
@@ -261,11 +262,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   openTx(acc: Account) {
+    this.showAccountPicker.set(false);
     this.router.navigate(['/transactions', acc.id]);
   }
 
   onFeature(f: any) {
-    if (f.action === 'tx') this.openTx(this.accounts[0]);
+    if (f.action === 'tx') this.showAccountPicker.set(true);
+  }
+
+  closeAccountPicker() {
+    this.showAccountPicker.set(false);
   }
 
   logout() {

@@ -1,55 +1,145 @@
-<div class="app-shell safe tx">
-  <div class="topbar">
-    <button mat-icon-button (click)="back()"><mat-icon>arrow_back</mat-icon></button>
-    <div class="title">Lịch sử giao dịch</div>
-    <div style="width:40px;"></div>
-  </div>
-
-  @if (!isLoading()) {
-    @if (account; as a) {
-      <div class="acc card-rounded">
-        <div class="pill">{{a.label}}</div>
-        <div class="accTitle">{{a.name}}</div>
-        <div class="accRow">
-          <div class="accNo">{{a.id}} <mat-icon class="copy">content_copy</mat-icon></div>
-          <div class="bal">{{a.currency}} {{a.balance | number}}</div>
-        </div>
-        <div class="accActions">
-          <span>Rút tiền ATM</span><span class="sep">|</span><span>Chuyển tiền</span>
-        </div>
-      </div>
-    }
-
-    <div class="filters">
-      <div class="f card-rounded active">
-        <div class="t">Tất cả</div>
-        <mat-icon>swap_vert</mat-icon>
-      </div>
-      <div class="f card-rounded">
-        <div class="t">Nộp tiền</div>
-        <mat-icon>add_circle_outline</mat-icon>
-      </div>
-      <div class="f card-rounded">
-        <div class="t">Rút tiền</div>
-        <mat-icon>remove_circle_outline</mat-icon>
-      </div>
+<div class="app-shell tx">
+  <!-- Fixed top section: topbar + account card + filters + range row -->
+  <div class="tx-fixed">
+    <!-- Top bar -->
+    <div class="topbar">
+      <button mat-icon-button (click)="back()" aria-label="Quay lại">
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+      <div class="title">Lịch sử giao dịch</div>
+      <div class="topbar-spacer"></div>
     </div>
 
-    <div class="list card-rounded">
-      @for (t of txns; track t) {
-        <div class="item">
-          <div class="left">
-            <div class="tt">{{t.title}}</div>
-            <div class="dd">{{t.dateISO | date:'dd.MM.yyyy'}}</div>
-            <div class="note">{{t.note}}</div>
+    @if (!isLoading()) {
+      @if (account; as a) {
+        <!-- Account card -->
+        <div class="acc">
+          <div class="acc-top">
+            <div class="pill">{{ a.label }}</div>
+            <div class="accTitle">{{ a.name }}</div>
           </div>
-
-          <div class="right" [class.pos]="t.amount>=0" [class.neg]="t.amount<0">
-            <div class="amt">{{sign(t.amount)}} {{abs(t.amount) | number}}</div>
-            <div class="rb">{{t.runningBalance | number}}</div>
+          <div class="acc-mid">
+            <div class="accNo">
+              {{ a.id }}
+              <mat-icon class="copy-icon">content_copy</mat-icon>
+            </div>
+          </div>
+          <div class="acc-bal">
+            <span class="bal-currency">{{ a.currency }}</span>
+            <span class="bal-amount">{{ a.balance | number }}</span>
+          </div>
+          <div class="acc-actions">
+            <button mat-button class="acc-action-btn">Rút tiền ATM</button>
+            <div class="acc-sep"></div>
+            <button mat-button class="acc-action-btn">Chuyển tiền</button>
           </div>
         </div>
       }
+
+      <!-- Filter tabs -->
+      <div class="filters">
+        <button class="f-btn" [class.active]="activeFilter() === 'all'" (click)="setFilter('all')">
+          <span class="f-label">Tất cả</span>
+          <mat-icon class="f-icon">swap_vert</mat-icon>
+        </button>
+        <button class="f-btn" [class.active]="activeFilter() === 'credit'" (click)="setFilter('credit')">
+          <span class="f-label">Nộp tiền</span>
+          <mat-icon class="f-icon f-icon-add">add_circle_outline</mat-icon>
+        </button>
+        <button class="f-btn" [class.active]="activeFilter() === 'debit'" (click)="setFilter('debit')">
+          <span class="f-label">Rút tiền</span>
+          <mat-icon class="f-icon">remove_circle_outline</mat-icon>
+        </button>
+      </div>
+
+      <!-- Date range + sort row -->
+      <div class="range-row">
+        <button class="range-btn-main" (click)="openDatePicker()">
+          {{ rangeBtnLabel() }}
+          <mat-icon class="range-chevron">expand_more</mat-icon>
+        </button>
+        <div class="range-sep">|</div>
+        <button class="sort-btn" (click)="toggleSort()">
+          {{ activeSort() === 'newest' ? 'Mới nhất' : 'Cũ nhất' }}
+        </button>
+      </div>
+    }
+  </div>
+
+  <!-- Scrollable transaction list -->
+  @if (!isLoading()) {
+    <div class="tx-scroll">
+      <div class="list">
+        @for (t of filteredTxns(); track t.id) {
+          <div class="item" (click)="openTxn(t)" role="button" tabindex="0" [attr.aria-label]="t.title">
+            <div class="left">
+              <div class="tt">{{ t.title }}</div>
+              <div class="dd">{{ t.dateISO | date:'dd.MM.yyyy' }}</div>
+              <div class="tags" [class.debit]="t.amount < 0" [class.credit]="t.amount >= 0">
+                <span class="tag-label">
+                  <mat-icon class="tag-icon">local_offer</mat-icon><span>{{ t.note }}</span>
+                </span>
+                <span class="tag-sep">|</span>
+                <button class="tag-memo-btn" aria-label="Ghi chú">
+                  <mat-icon class="tag-memo-icon">loyalty</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="right">
+              <div class="amt-row" [class.pos]="t.amount >= 0" [class.neg]="t.amount < 0">
+                <div class="amt-currency">VND</div>
+                <div class="amt-value">{{ sign(t.amount) }}{{ abs(t.amount) | number }}</div>
+              </div>
+              @if (t.runningBalance !== undefined) {
+                <div class="rb-row">
+                  <div class="rb-currency">VND</div>
+                  <div class="rb-value">{{ t.runningBalance | number }}</div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        @if (filteredTxns().length === 0) {
+          <div class="empty">Không có lịch sử giao dịch</div>
+        }
+      </div>
     </div>
+
+    <!-- Date picker bottom sheet -->
+    @if (showDatePicker()) {
+      <div class="dp-backdrop" (click)="closeDatePicker()" aria-hidden="true"></div>
+      <div class="dp-sheet" role="dialog" aria-modal="true" aria-label="Chọn thời gian">
+        <div class="dp-header">
+          <div class="dp-title">Thời gian vấn tin</div>
+          <button class="dp-confirm-btn" (click)="confirmDateRange()">Xác nhận</button>
+        </div>
+
+        <!-- Preset buttons -->
+        <div class="dp-presets">
+          <button class="dp-preset" [class.active]="pickerPreset() === '1w'" (click)="applyPreset('1w')">1 tuần</button>
+          <button class="dp-preset" [class.active]="pickerPreset() === '1m'" (click)="applyPreset('1m')">1 tháng</button>
+          <button class="dp-preset" [class.active]="pickerPreset() === '3m'" (click)="applyPreset('3m')">3 tháng</button>
+        </div>
+
+        <!-- Date inputs -->
+        <div class="dp-dates">
+          <div class="dp-date-field">
+            <input type="date" class="dp-date-input" [ngModel]="pickerFrom()" (ngModelChange)="pickerFrom.set($event)" />
+            <span class="dp-date-display">{{ formatDisplayDate(pickerFrom()) }}</span>
+            <mat-icon class="dp-cal-icon">calendar_month</mat-icon>
+          </div>
+          <div class="dp-date-sep">|</div>
+          <div class="dp-date-field">
+            <input type="date" class="dp-date-input" [ngModel]="pickerTo()" (ngModelChange)="pickerTo.set($event)" />
+            <span class="dp-date-display">{{ formatDisplayDate(pickerTo()) }}</span>
+            <mat-icon class="dp-cal-icon">calendar_month</mat-icon>
+          </div>
+        </div>
+
+        <div class="dp-handle"></div>
+      </div>
+    }
   }
 </div>

@@ -1,0 +1,229 @@
+.td-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #f2f3f7;
+
+  // ── Top bar ─────────────────────────────────────────────────
+  .topbar {
+    display: flex;
+    align-items: center;
+    background: #f2f3f7;
+    padding: calc(env(safe-area-inset-top) + 10px) 8px 8px 4px;
+    flex-shrink: 0;
+
+    .title {
+      flex: 1;
+      text-align: center;
+      font-weight: 700;
+      font-size: 17px;
+      color: #555;
+    }
+
+    .topbar-spacer { width: 40px; }
+
+    button[mat-icon-button] {
+      color: #555;
+    }
+  }
+
+  // ── Amount card ──────────────────────────────────────────────
+  .amt-card {
+    margin: 0 14px 14px;
+    border-radius: 20px;
+    padding: 24px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    &.neg {
+      background: linear-gradient(160deg, #ff8a80 0%, #d32f2f 100%);
+      box-shadow: 0 4px 18px rgba(211, 47, 47, 0.28);
+    }
+
+    &.pos {
+      background: linear-gradient(160deg, #64b5f6 0%, #1565c0 100%);
+      box-shadow: 0 4px 18px rgba(21, 101, 192, 0.28);
+    }
+
+    .amt-title {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .amt-currency {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.75);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    .amt-value {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .amt-date {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.75);
+      margin-top: 6px;
+    }
+  }
+
+  // ── Detail card ──────────────────────────────────────────────
+  .detail-card {
+    margin: 0 14px;
+    margin-bottom: calc(80px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-radius: 20px;
+    padding: 0 16px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+  }
+
+  // Tag row
+  .tag-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 0;
+
+    &.debit {
+      .tag-icon, .tag-label { color: #d32f2f; }
+      .tag-memo-icon { color: #d32f2f; }
+    }
+    &.credit {
+      .tag-icon, .tag-label { color: #2563eb; }
+      .tag-memo-icon { color: #2563eb; }
+    }
+
+    .tag-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .tag-label {
+      font-size: 13px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .tag-sep {
+      color: #ddd;
+      font-size: 13px;
+    }
+
+    .tag-memo-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      -webkit-tap-highlight-color: transparent;
+
+      .tag-memo-icon {
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
+        line-height: 1;
+      }
+    }
+  }
+
+  .divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 0 -16px;
+  }
+
+  // Info rows
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f0;
+
+    &:last-child { border-bottom: none; }
+
+    .info-label {
+      font-size: 13px;
+      color: #aaa;
+      font-weight: 400;
+      flex-shrink: 0;
+      min-width: 110px;
+    }
+
+    .info-value {
+      font-size: 13px;
+      color: #333;
+      font-weight: 600;
+      text-align: right;
+      word-break: break-word;
+
+      .rb-currency {
+        font-size: 11px;
+        font-weight: 400;
+        color: #bbb;
+        margin-right: 3px;
+      }
+    }
+  }
+
+  .not-found {
+    padding: 60px 20px;
+    text-align: center;
+    color: #aaa;
+    font-size: 15px;
+  }
+
+  // ── Share bar ────────────────────────────────────────────────
+  .share-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 0;
+      border: none;
+      border-radius: 14px;
+      background: #f0f4ff;
+      color: #2563eb;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
+
+      &:active { background: #dce8ff; }
+
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        line-height: 1;
+      }
+    }
+  }
+}
+
