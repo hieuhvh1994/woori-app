@@ -1,0 +1,186 @@
+<div class="transfer-shell">
+  <!-- Blue header zone -->
+  <div class="blue-zone">
+    <div class="topbar">
+      <button class="back-btn" (click)="back()" aria-label="Quay lại">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <h1 class="topbar-title">Chuyển nhanh (Napas 247)</h1>
+      <button class="info-btn" (click)="openInfo()" aria-label="Thông tin">
+        <mat-icon>info_outline</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Account card -->
+  @if (account(); as acc) {
+    <div class="acc-card">
+      <div class="acc-avatar">
+        <mat-icon class="avatar-icon">account_circle</mat-icon>
+      </div>
+      <div class="acc-info">
+        <div class="acc-number">
+          {{ acc.id }}[{{ acc.currency }}]
+          <mat-icon class="chevron-icon">chevron_right</mat-icon>
+        </div>
+        <div class="acc-balance">
+          <span class="bal-label">VND</span>
+          <span class="bal-amount">{{ acc.balance | number }}</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Content -->
+  <div class="content">
+    <div class="tab-row">
+      <button class="tab-btn" [class.active]="activeTab() === 'account'" (click)="setTab('account')">Đến tài khoản</button>
+      <button class="tab-btn" [class.active]="activeTab() === 'card'" (click)="setTab('card')">Đến thẻ</button>
+    </div>
+
+    <p class="field-label">Số tiền chuyển</p>
+    <div class="amount-box">
+      <input
+        class="amount-input"
+        type="text"
+        inputmode="numeric"
+        placeholder="Nhập số tiền chuyển"
+        [value]="displayAmount()"
+        (input)="onAmountInput($event)"
+        aria-label="Số tiền chuyển"
+      />
+      <button class="currency-btn" (click)="toggleCurrency()" aria-label="Chọn loại tiền">
+        {{ currency() }}
+        <mat-icon class="caret">expand_more</mat-icon>
+      </button>
+    </div>
+
+    <!-- ── Beneficiary inline card (appears after tapping Tiếp) ── -->
+    @if (showBeneficiary()) {
+      <p class="field-label bene-label">Thông tin người thụ hưởng</p>
+      <div class="bene-card">
+        <!-- Bank row -->
+        <button class="bene-row" (click)="openBankPicker()" aria-label="Chọn ngân hàng">
+          <span class="bene-row-value" [class.placeholder]="!selectedBank()">
+            {{ selectedBank()?.shortName ?? 'WOORI BANK' }}
+          </span>
+          <mat-icon class="bene-row-icon search-icon">search</mat-icon>
+        </button>
+        <div class="bene-divider"></div>
+        <!-- Account number row -->
+        <div class="bene-row no-hover">
+          <input
+            class="bene-input"
+            type="text"
+            inputmode="numeric"
+            placeholder="Nhập số tài khoản thụ hưởng"
+            [formControl]="accountNoControl"
+            aria-label="Số tài khoản thụ hưởng"
+          />
+          <button class="contact-btn" (click)="openContactPicker()" aria-label="Chọn từ danh bạ">
+            <mat-icon>contacts</mat-icon>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="footer">
+    <button class="next-btn" (click)="showBeneficiary() ? submitBeneficiary() : next()" aria-label="Tiếp theo">Tiếp</button>
+  </div>
+
+  <!-- ══════════ LOADING OVERLAY ══════════ -->
+  @if (isLoading()) {
+    <div class="loading-overlay" aria-live="polite" aria-label="Đang xử lý">
+      <div class="spinner"></div>
+    </div>
+  }
+
+  <!-- ══════════ BANK PICKER BOTTOM SHEET ══════════ -->
+  @if (showBankPicker()) {
+    <div class="sheet-backdrop" (click)="closeBankPicker()" aria-hidden="true"></div>
+    <div class="bottom-sheet bank-sheet" role="dialog" aria-modal="true" aria-label="Truy vấn ngân hàng hướng">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-title">Truy vấn ngân hàng hướng</h2>
+
+      <div class="search-box">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Vui lòng nhập tên ngân hàng"
+          [formControl]="bankSearch"
+          aria-label="Tìm kiếm ngân hàng"
+        />
+      </div>
+
+      <div class="bank-list">
+        @for (bank of filteredBanks(); track bank.code) {
+          <button class="bank-item" (click)="selectBank(bank)" [attr.aria-label]="bank.shortName">
+            <div class="bank-item-info">
+              <span class="bank-short">{{ bank.shortName }}</span>
+              <span class="bank-full">{{ bank.fullName }}</span>
+            </div>
+            @if (bank.recent) {
+              <mat-icon class="bank-recent-icon">history</mat-icon>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ══════════ CONTACT PICKER BOTTOM SHEET ══════════ -->
+  @if (showContactPicker()) {
+    <div class="sheet-backdrop" (click)="closeContactPicker()" aria-hidden="true"></div>
+    <div class="bottom-sheet contact-sheet" role="dialog" aria-modal="true" aria-label="Chọn người nhận">
+      <div class="sheet-handle"></div>
+
+      <!-- Contact tabs -->
+      <div class="contact-tabs">
+        <button class="ctab" [class.active]="activeContactTab() === 'recent'" (click)="setContactTab('recent')">Gần đây</button>
+        <button class="ctab" [class.active]="activeContactTab() === 'frequent'" (click)="setContactTab('frequent')">Thường dùng</button>
+        <button class="ctab" [class.active]="activeContactTab() === 'me'" (click)="setContactTab('me')">Tôi</button>
+      </div>
+
+      <div class="search-box">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Nhập thông tin người nhận"
+          [formControl]="contactSearch"
+          aria-label="Tìm kiếm người nhận"
+        />
+      </div>
+
+      <div class="contact-list">
+        @for (c of filteredContacts(); track c.accountNo) {
+          <button class="contact-item" (click)="selectContact(c)" [attr.aria-label]="c.name">
+            <div class="contact-info">
+              <span class="contact-name">{{ c.name }}</span>
+              <span class="contact-bank">{{ c.bank }}<br/>{{ c.accountNo }}</span>
+            </div>
+            <mat-icon class="fav-icon">star_border</mat-icon>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ══════════ INFO BOTTOM SHEET ══════════ -->
+  @if (showInfo()) {
+    <div class="sheet-backdrop" (click)="closeInfo()" aria-hidden="true"></div>
+    <div class="bottom-sheet info-sheet" role="dialog" aria-modal="true" aria-labelledby="info-title">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-title info-title" id="info-title">Hướng dẫn và chú ý</h2>
+      <div class="info-body">
+        <p>Hạn mức chuyển nhanh Napas247 là dưới 500,000,000VNĐ/giao dịch.</p>
+        <p>Các giao dịch đã thực hiện không thể hủy hoặc thu hồi.</p>
+        <p>Trường hợp ngân hàng thụ hưởng là Agribank, không thể chuyển tới các tài khoản chưa phát hành thẻ.</p>
+        <p>Các tài khoản vốn, tài khoản đầu tư gián tiếp, tài khoản OFFSHORE chỉ có thể chuyển đến tài khoản của chính mình trong Woori Bank.</p>
+      </div>
+    </div>
+  }
+</div>
+

@@ -17,5 +17,6 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'transactions/:accountId', component: TransactionsComponent, canActivate: [authGuard] },
   { path: 'transactions/:accountId/detail/:txnId', loadComponent: () => import('./pages/transaction-detail/transaction-detail').then(m => m.TransactionDetailComponent), canActivate: [authGuard] },
+  { path: 'transactions/:accountId/transfer', loadComponent: () => import('./pages/transfer/transfer').then(m => m.TransferComponent), canActivate: [authGuard] },
   { path: '**', redirectTo: '' },
 ];

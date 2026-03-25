@@ -1,12 +1,12 @@
 <div class="app-shell safe profile">
-  <div class="profile-header">
-    <button mat-icon-button class="back-btn" (click)="goBack()">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <h1 class="title">Cài đặt</h1>
-  </div>
+  <div class="blue-zone">
+    <div class="profile-header">
+      <button mat-icon-button class="back-btn" (click)="goBack()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <h1 class="title">Cài đặt</h1>
+    </div>
 
-  <div class="profile-content">
     <div class="user-info">
       <div class="avatar-wrapper">
         <img ngSrc="anonymous-avatar.png" alt="Profile" width="120" height="120" class="avatar" />
@@ -15,7 +15,7 @@
         </button>
       </div>
       <h2 class="user-name">{{ userInfo.name }}</h2>
-      <p class="user-code">My code {{ userInfo.code }}</p>
+      <p class="user-code">My code <strong>{{ userInfo.code }}</strong></p>
     </div>
 
     <div class="points-card">
@@ -27,11 +27,10 @@
         <span class="currency">VNĐ</span>
         <span class="amount">{{ userInfo.points }}</span>
       </div>
-      <div class="points-decoration">
-        <div class="phone-icon"></div>
-      </div>
     </div>
+  </div>
 
+  <div class="profile-content">
     <div class="settings-section">
       @for (item of settingsItems; track item.label) {
         <div class="setting-item" (click)="onSettingItemClick(item.label)">

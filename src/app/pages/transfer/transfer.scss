@@ -1,0 +1,564 @@
+.transfer-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #f0f2f8;
+  position: relative;
+
+  // ── Blue header ───────────────────────────────────────────────
+  .blue-zone {
+    background: linear-gradient(160deg, #6b9cff 0%, #4a7aee 100%);
+    padding-bottom: 56px;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    padding: calc(env(safe-area-inset-top) + 10px) 8px 12px;
+    gap: 4px;
+
+    .back-btn,
+    .info-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      border-radius: 50%;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+
+      mat-icon { font-size: 26px; }
+    }
+
+    .topbar-title {
+      flex: 1;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  // ── Account card ──────────────────────────────────────────────
+  .acc-card {
+    position: relative;
+    margin: -44px 16px 0;
+    background: #fff;
+    border-radius: 18px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    z-index: 2;
+
+    .acc-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #e8edf5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      .avatar-icon {
+        font-size: 25px;
+        color: #bcc5d6;
+      }
+    }
+
+    .acc-info {
+      flex: 1;
+      min-width: 0;
+
+      .acc-number {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        font-size: 16px;
+        font-weight: 650;
+        color: #6b9cff;;
+
+        .chevron-icon {
+          font-size: 28px;
+          color: #6b9cff;
+        }
+      }
+
+      .acc-balance {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        margin-top: 4px;
+
+        .bal-label {
+          font-size: 13px;
+          color: #999;
+          font-weight: 500;
+        }
+
+        .bal-amount {
+          font-size: 22px;
+          font-weight: 650;
+          color: #999;
+          letter-spacing: -0.5px;
+        }
+      }
+    }
+  }
+
+  // ── White content ─────────────────────────────────────────────
+  .content {
+    flex: 1;
+    padding: 20px 16px 0;
+
+    .tab-row {
+      display: flex;
+      background: #fff;
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+      margin-bottom: 20px;
+
+      .tab-btn {
+        flex: 1;
+        padding: 10px 8px;
+        border: none;
+        border-radius: 9px;
+        background: transparent;
+        font-size: 14px;
+        font-weight: 500;
+        color: #999;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        -webkit-tap-highlight-color: transparent;
+
+        &.active {
+          background: #6b9cff;
+          color: #fff;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .field-label {
+      font-size: 13px;
+      color: #999;
+      margin: 0 0 8px;
+    }
+
+    .amount-box {
+      display: flex;
+      align-items: center;
+      background: #6b9cff;
+      border-radius: 14px;
+      padding: 0 12px 0 18px;
+      height: 56px;
+      gap: 8px;
+
+      .amount-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+        min-width: 0;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.75);
+        }
+      }
+
+      .currency-btn {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        background: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 10px 6px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #999;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+        -webkit-tap-highlight-color: transparent;
+
+        .caret {
+          font-size: 20px;
+          color: #999;
+        }
+      }
+    }
+
+    .bene-label {
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    .bene-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.07);
+      display: flex;
+      flex-direction: column;
+
+      .bene-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        min-height: 52px;
+        padding: 14px 16px;
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+        appearance: none;
+        -webkit-appearance: none;
+        text-decoration: none;
+
+        &:active:not(.no-hover) { background: #f5f5f5; }
+
+        .bene-row-value {
+          flex: 1;
+          font-size: 15px;
+          font-weight: 600;
+          color: #1a1a1a;
+          text-align: left;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &.placeholder {
+            color: #aaa;
+            font-weight: 700;
+          }
+        }
+
+        .bene-row-icon {
+          font-size: 22px;
+          color: #c0c0c0;
+          flex-shrink: 0;
+          margin-left: 8px;
+        }
+
+        .bene-input {
+          flex: 1;
+          border: none;
+          outline: none;
+          font-size: 15px;
+          color: #6b9cff;
+          font-weight: 700;
+          background: transparent;
+          min-width: 0;
+          padding: 0;
+          appearance: none;
+
+          &::placeholder { color: #6b9cff; opacity: 0.85; }
+        }
+
+        .contact-btn {
+          background: transparent;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 0;
+          margin-left: 8px;
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+          -webkit-tap-highlight-color: transparent;
+
+          mat-icon {
+            font-size: 22px;
+            color: #c0c0c0;
+          }
+        }
+      }
+
+      .bene-divider {
+        height: 1px;
+        background: #efefef;
+        margin: 0 16px;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // ── Footer ────────────────────────────────────────────────────
+  .footer {
+    padding: 16px 16px calc(env(safe-area-inset-bottom) + 24px);
+
+    .next-btn {
+      width: 100%;
+      height: 52px;
+      background: #6b9cff;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+      -webkit-tap-highlight-color: transparent;
+
+      &:active { background: #4a7aee; }
+    }
+  }
+
+  // ── Loading overlay ───────────────────────────────────────────
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  // ── Shared backdrop ───────────────────────────────────────────
+  .sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 100;
+  }
+
+  // ── Shared bottom sheet ───────────────────────────────────────
+  .bottom-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    z-index: 101;
+    display: flex;
+    flex-direction: column;
+    max-height: 80dvh;
+    padding-bottom: env(safe-area-inset-bottom);
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 2px;
+      margin: 10px auto 0;
+      flex-shrink: 0;
+    }
+
+    .sheet-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #222;
+      text-align: center;
+      margin: 14px 20px 16px;
+      flex-shrink: 0;
+    }
+
+    // Search box (shared)
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f5f6fa;
+      border-radius: 24px;
+      padding: 10px 16px;
+      margin: 0 16px 14px;
+      flex-shrink: 0;
+
+      .search-icon { font-size: 20px; color: #aaa; }
+
+      .search-input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 14px;
+        color: #333;
+        &::placeholder { color: #bbb; }
+      }
+    }
+
+    // ── Bank list ───────────────────────────────────────────────
+    .bank-list {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 16px 16px;
+
+      .bank-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 14px 4px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        text-align: left;
+        -webkit-tap-highlight-color: transparent;
+
+        &:last-child { border-bottom: none; }
+        &:active { background: #f9f9f9; }
+
+        .bank-item-info {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+
+          .bank-short {
+            font-size: 15px;
+            font-weight: 700;
+            color: #222;
+          }
+
+          .bank-full {
+            font-size: 12px;
+            color: #999;
+          }
+        }
+
+        .bank-recent-icon { font-size: 20px; color: #bbb; }
+      }
+    }
+
+    // ── Contact tabs ────────────────────────────────────────────
+    .contact-tabs {
+      display: flex;
+      border-bottom: 1px solid #eee;
+      margin: 0 16px 14px;
+      flex-shrink: 0;
+
+      .ctab {
+        flex: 1;
+        padding: 10px 4px;
+        border: none;
+        background: transparent;
+        font-size: 14px;
+        font-weight: 500;
+        color: #999;
+        cursor: pointer;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+
+        &.active {
+          color: #6b9cff;
+          font-weight: 700;
+
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0; right: 0;
+            height: 2px;
+            background: #6b9cff;
+            border-radius: 2px 2px 0 0;
+          }
+        }
+      }
+    }
+
+    // ── Contact list ────────────────────────────────────────────
+    .contact-list {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 16px 16px;
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 14px 4px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        text-align: left;
+        -webkit-tap-highlight-color: transparent;
+
+        &:last-child { border-bottom: none; }
+        &:active { background: #f9f9f9; }
+
+        .contact-info {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          flex: 1;
+          min-width: 0;
+
+          .contact-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #222;
+          }
+
+          .contact-bank {
+            font-size: 12px;
+            color: #999;
+            text-align: right;
+          }
+        }
+
+        .fav-icon { font-size: 22px; color: #ccc; flex-shrink: 0; }
+      }
+    }
+    // ── Info sheet ──────────────────────────────────────────────
+    &.info-sheet {
+      .info-title {
+        color: #6b9cff;
+      }
+
+      .info-body {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 24px 32px;
+
+        p {
+          font-size: 15px;
+          color: #444;
+          line-height: 1.6;
+          margin: 0 0 16px;
+
+          &:last-child { margin-bottom: 0; }
+        }
+      }
+    }
+  }
+}
+

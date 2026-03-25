@@ -33,9 +33,19 @@ export class TransactionsComponent implements OnInit {
   activeFilter = signal<FilterType>('all');
   activeSort = signal<SortType>('newest');
 
+  private readonly today = this.getToday();
+
+  private getToday(): string {
+    const d = new Date();
+    const yy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yy}-${mm}-${dd}`;
+  }
+
   // Date range (ISO strings YYYY-MM-DD)
-  rangeFrom = signal('2025-12-20');
-  rangeTo = signal('2026-03-20');
+  rangeFrom = signal(this.addDays(this.getToday(), -90));
+  rangeTo = signal(this.getToday());
   // Label shown in the row button
   rangeBtnLabel = signal('3 tháng');
 
@@ -82,6 +92,11 @@ export class TransactionsComponent implements OnInit {
   sign(v: number): string { return v >= 0 ? '+' : '-'; }
   abs(v: number): number { return Math.abs(v); }
 
+  goToTransfer(): void {
+    const accountId = this.route.snapshot.paramMap.get('accountId') ?? '';
+    this.router.navigateByUrl(`/transactions/${accountId}/transfer`);
+  }
+
   openTxn(t: Txn): void {
     const accountId = this.route.snapshot.paramMap.get('accountId') ?? '';
     this.router.navigateByUrl(`/transactions/${accountId}/detail/${t.id}`);
@@ -111,8 +126,8 @@ export class TransactionsComponent implements OnInit {
 
   applyPreset(preset: PickerPreset): void {
     this.pickerPreset.set(preset);
-    const today = '2026-03-20'; // current date
-    let from = '';
+    const today = this.today;
+    let from: string;
     if (preset === '1w') {
       from = this.addDays(today, -7);
       this.rangeBtnLabel.set('1 tuần');
