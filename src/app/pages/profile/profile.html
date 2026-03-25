@@ -6,7 +6,7 @@
       </button>
       <h1 class="title">Cài đặt</h1>
     </div>
-
+  <div class="profile-content">
     <div class="user-info">
       <div class="avatar-wrapper">
         <img ngSrc="anonymous-avatar.png" alt="Profile" width="120" height="120" class="avatar" />
@@ -29,8 +29,9 @@
       </div>
     </div>
   </div>
-
+      </div>
   <div class="profile-content">
+
     <div class="settings-section">
       @for (item of settingsItems; track item.label) {
         <div class="setting-item" (click)="onSettingItemClick(item.label)">

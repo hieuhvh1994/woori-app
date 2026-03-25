@@ -44,14 +44,14 @@ export class TransactionsComponent implements OnInit {
   }
 
   // Date range (ISO strings YYYY-MM-DD)
-  rangeFrom = signal(this.addDays(this.getToday(), -90));
+  rangeFrom = signal(this.addDays(this.getToday(), -7));
   rangeTo = signal(this.getToday());
   // Label shown in the row button
-  rangeBtnLabel = signal('3 tháng');
+  rangeBtnLabel = signal('1 tuần');
 
   // Date picker sheet
   showDatePicker = signal(false);
-  pickerPreset = signal<PickerPreset>('3m');
+  pickerPreset = signal<PickerPreset>('1w');
   pickerFrom = signal('');
   pickerTo = signal('');
 
