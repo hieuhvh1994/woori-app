@@ -70,8 +70,9 @@ export class TransactionsComponent implements OnInit {
       list = list.filter(t => t.amount < 0);
     }
 
+    const toDateTime = (t: Txn) => `${t.dateISO}T${t.timeStr ?? '00:00:00'}`;
     list.sort((a, b) => {
-      const cmp = b.dateISO.localeCompare(a.dateISO);
+      const cmp = toDateTime(b).localeCompare(toDateTime(a));
       return sort === 'newest' ? cmp : -cmp;
     });
     return list;
