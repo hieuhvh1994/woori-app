@@ -38,10 +38,20 @@
       <!-- Sender account section -->
       <div class="section-label">Tài khoản chuyển</div>
       <div class="account-box">
-        <div class="account-bank">{{ t.counterpartyBank ?? 'WOORI BANK' }}</div>
+        <div class="account-bank">{{ senderBank() }}</div>
         <div class="account-row">
-          <span class="account-name">{{ t.counterpartyName ?? t.title }}</span>
-          <span class="account-number">{{ t.counterpartyAccount ?? '' }}</span>
+          <span class="account-name">{{ senderName() }}</span>
+          <span class="account-number">{{ senderAccount() }}</span>
+        </div>
+      </div>
+
+      <!-- Recipient account section -->
+      <div class="section-label">Tài khoản nhận</div>
+      <div class="account-box">
+        <div class="account-bank">{{ receiverBank() }}</div>
+        <div class="account-row">
+          <span class="account-name">{{ receiverName() }}</span>
+          <span class="account-number">{{ receiverAccount() }}</span>
         </div>
       </div>
 

@@ -29,6 +29,48 @@ export class TransactionDetailComponent {
     return this.mockData.getTransactions(accountId).find(t => t.id === txnId);
   });
 
+  /** Tên tài khoản gửi */
+  readonly senderName = computed(() => {
+    const t = this.txn();
+    if (!t) return '';
+    return t.senderName ?? (t.amount < 0 ? (t.counterpartyName ?? t.title) : (t.counterpartyName ?? t.title));
+  });
+
+  /** Số tài khoản gửi */
+  readonly senderAccount = computed(() => {
+    const t = this.txn();
+    if (!t) return '';
+    return t.senderAccount ?? (t.amount < 0 ? t.accountId : (t.counterpartyAccount ?? ''));
+  });
+
+  /** Ngân hàng gửi */
+  readonly senderBank = computed(() => {
+    const t = this.txn();
+    if (!t) return 'WOORI BANK';
+    return t.senderBank ?? (t.amount < 0 ? 'WOORI BANK' : (t.counterpartyBank ?? 'WOORI BANK'));
+  });
+
+  /** Tên tài khoản nhận */
+  readonly receiverName = computed(() => {
+    const t = this.txn();
+    if (!t) return '';
+    return t.receiverName ?? (t.amount < 0 ? (t.counterpartyName ?? t.title) : (t.counterpartyName ?? t.title));
+  });
+
+  /** Số tài khoản nhận */
+  readonly receiverAccount = computed(() => {
+    const t = this.txn();
+    if (!t) return '';
+    return t.receiverAccount ?? (t.amount < 0 ? (t.counterpartyAccount ?? '') : t.accountId);
+  });
+
+  /** Ngân hàng nhận */
+  readonly receiverBank = computed(() => {
+    const t = this.txn();
+    if (!t) return 'WOORI BANK';
+    return t.receiverBank ?? (t.amount < 0 ? (t.counterpartyBank ?? 'WOORI BANK') : 'WOORI BANK');
+  });
+
   sign(v: number): string { return v >= 0 ? '+' : '-'; }
   abs(v: number): number { return Math.abs(v); }
 
