@@ -232,12 +232,22 @@ export class MockDataService {
     {
       id: 't18',
       accountId: '100150765538',
-      dateISO: '2026-04-24', timeStr: '23:04:04',
+      dateISO: '2026-04-24', timeStr: '14:04:04',
       title: 'DAO DUY HIEU', amount: -39000000,
       refNo: '24042026000018', channel: 'Auto Transfer', transferNote: 'DAO DUY HIEU chuyen tien',
       senderName: 'DAO DUY HIEU', senderAccount: '100150765538', senderBank: 'WOORI BANK',
       receiverName: 'DAO DUY HIEU', receiverAccount: '0181003556697', receiverBank: 'Vietcombank (VCB)',
       showSender: true, showReceiver: true
+    },
+    {
+      id: 't19',
+      accountId: '100150765538',
+      dateISO: '2026-05-25', timeStr: '14:59:59',
+      title: 'LG CNS Vietnam Salary', amount: 41221918,
+      refNo: '24042026000017', channel: 'Auto Transfer', transferNote: 'LG CNS Vietnam Salary',
+      senderName: '', senderAccount: '', senderBank: 'WOORI BANK',
+      receiverName: 'DAO DUY HIEU', receiverAccount: '100150765538', receiverBank: 'WOORI BANK',
+      showSender: false, showReceiver: true
     },
   ];
   private computedBalance(accountId: string): number {
