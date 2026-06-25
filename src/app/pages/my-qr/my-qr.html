@@ -1,0 +1,57 @@
+<div class="my-qr">
+  <!-- Top bar (blue) -->
+  <div class="topbar">
+    <button class="icon-btn" (click)="back()" aria-label="Quay lại">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <h1 class="title">QR của tôi</h1>
+    <span class="icon-btn placeholder"></span>
+  </div>
+
+  <!-- White sheet -->
+  <div class="sheet">
+    <div class="bank-row">
+      <span class="badge"><img class="bl woori" src="images/Won-banner.png" alt="Woori Bank" /></span>
+      <span class="badge"><img class="bl vietqr" src="images/vietqr.png" alt="VietQR" /></span>
+    </div>
+
+    <div class="qr-wrap">
+      @if (qrDataUrl()) {
+        <img class="qr" [src]="qrDataUrl()" alt="Mã QR nhận tiền" />
+      } @else {
+        <div class="qr placeholder"></div>
+      }
+      <span class="qr-logo">
+        <img src="images/won_icon.png" alt="WON" />
+      </span>
+    </div>
+
+    <img class="napas-logo" src="images/Napas247_trim.png" alt="napas 247" />
+
+    <div class="info-card">
+      <span class="label">Tên người<br />thụ hưởng</span>
+      <span class="value">{{ name }}</span>
+    </div>
+
+    <button class="info-card row-btn">
+      <span class="label">Tài khoản thụ hưởng</span>
+      <span class="value">{{ accountId }} <mat-icon>expand_more</mat-icon></span>
+    </button>
+
+    <button class="add-amount">
+      <mat-icon>add_circle</mat-icon>
+      <span>Thêm số tiền</span>
+    </button>
+
+    <div class="actions">
+      <button class="act" (click)="save()">
+        <span class="act-ico"><mat-icon>download</mat-icon></span>
+        <span class="act-lbl">Lưu</span>
+      </button>
+      <button class="act" (click)="share()">
+        <span class="act-ico"><mat-icon>share</mat-icon></span>
+        <span class="act-lbl">Chia sẻ</span>
+      </button>
+    </div>
+  </div>
+</div>

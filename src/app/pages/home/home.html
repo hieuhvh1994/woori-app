@@ -134,11 +134,11 @@
                     <div class="chart-container">
                       <div class="chart-bars">
                         <div class="bar bar-income" [class.bar-empty]="card.income === 0"
-                             [style.height]="card.income > 0 ? (card.income / 20101105 * 100) + '%' : '0'"></div>
+                             [style.height]="card.income > 0 ? (card.income / overviewMax * 100) + '%' : '0'"></div>
                         <div class="bar bar-saving" [class.bar-empty]="card.savings === 0"
-                             [style.height]="card.savings > 0 ? (card.savings / 20101105 * 100) + '%' : '0'"></div>
+                             [style.height]="card.savings > 0 ? (card.savings / overviewMax * 100) + '%' : '0'"></div>
                         <div class="bar bar-expense" [class.bar-empty]="card.expenses === 0"
-                             [style.height]="card.expenses > 0 ? (card.expenses / 20101105 * 100) + '%' : '0'"></div>
+                             [style.height]="card.expenses > 0 ? (card.expenses / overviewMax * 100) + '%' : '0'"></div>
                       </div>
                     </div>
 
@@ -301,7 +301,7 @@
     <mat-icon>dashboard</mat-icon>
     <span>Sản phẩm</span>
   </button>
-  <button mat-button class="nav-item scan">
+  <button mat-button class="nav-item scan" (click)="goToQrScan()">
     <div class="scan-button">
       <mat-icon>qr_code_scanner</mat-icon>
     </div>

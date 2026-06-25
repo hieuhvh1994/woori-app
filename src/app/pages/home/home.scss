@@ -3,7 +3,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  min-height: var(--app-height, 100dvh);
+  /* Chiều cao CỐ ĐỊNH = màn hình -> .home là vùng cuộn thật (overflow-y:auto chạy).
+     Header (sticky) dính trên cùng, bottom-nav (fixed) cố định đáy, chỉ phần giữa cuộn. */
+  height: 100vh;                     /* fallback */
+  height: max(100vh, 100dvh);
   box-sizing: border-box;
 
   .header{
@@ -1008,22 +1011,26 @@
 
     &.scan {
       position: relative;
-      top: -10px;
+      top: -24px;                 /* nổi hẳn lên trên thanh như ảnh */
+      min-width: 64px;
+      align-self: center;
 
       .scan-button {
-        width: 56px;
-        height: 56px;
+        width: 64px;
+        height: 64px;
         border-radius: 50%;
         background: linear-gradient(135deg, #5b8fff 0%, #4d7cff 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 4px 12px rgba(77, 124, 255, 0.3);
+        border: 4px solid #fff;   /* viền trắng ôm ngoài -> tách khỏi thanh, trông như nổi */
+        box-sizing: border-box;
+        box-shadow: 0 6px 16px rgba(77, 124, 255, 0.45);
 
         mat-icon {
-          font-size: 28px;
-          width: 28px;
-          height: 28px;
+          font-size: 30px;
+          width: 30px;
+          height: 30px;
           color: #fff;
         }
       }

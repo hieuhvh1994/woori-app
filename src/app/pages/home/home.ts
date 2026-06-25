@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private touchEndX = 0;
 
   features: Feature[] = [
-    { image: 'images/Logo_Chuyen_tien.png', label: 'Chuyển tiền', bgColor: '#fff5ed' },
+    { image: 'images/Logo_Chuyen_tien.png', label: 'Chuyển tiền', action: 'transfer', bgColor: '#fff5ed' },
     { image: 'images/Logo_Tiet_kiem.png', label: 'Tiết kiệm', bgColor: '#fef3f4' },
     { image: 'images/Logo_Vay.png', label: 'Vay', bgColor: '#f0f5ff' },
     { image: 'images/Logo_Lich_Su_GIao_dich.png', label: 'Lịch sử\ngiao dịch', action: 'tx', bgColor: '#eef3ff' },
@@ -101,66 +101,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     { image: 'images/Logo_Vietlott.png', label: 'Vietlott SMS', badge: 'Hot', bgColor: '#fcf3f4', action: 'vietlott' },
   ];
 
-  // Financial overview data
-  financialCards: FinancialCard[] = [
-    {
-      type: 'overview',
-      title: 'Tổng quan tài chính VND 02/2026',
-      income: 19561317,
-      savings: 0,
-      expenses: 20101105,
-    },
-    {
-      type: 'timeseries',
-      title: '',
-      dateRange: '04/2025~03/2026',
-      expenseData: [
-        { label: 'T4', value: 0 },
-        { label: 'T5', value: 0 },
-        { label: 'T6', value: 0 },
-        { label: 'T7', value: 0 },
-        { label: 'T8', value: 0 },
-        { label: 'T9', value: 3500000 },
-        { label: 'T10', value: 4200000 },
-        { label: 'T11', value: 3800000 },
-        { label: 'T12', value: 5200000 },
-        { label: 'T1', value: 4500000 },
-        { label: 'T2', value: 4800000 },
-        { label: 'T3', value: 0 },
-      ],
-      incomeData: [
-        { label: 'T4', value: 0 },
-        { label: 'T5', value: 0 },
-        { label: 'T6', value: 0 },
-        { label: 'T7', value: 0 },
-        { label: 'T8', value: 0 },
-        { label: 'T9', value: 3800000 },
-        { label: 'T10', value: 4400000 },
-        { label: 'T11', value: 4000000 },
-        { label: 'T12', value: 5500000 },
-        { label: 'T1', value: 4800000 },
-        { label: 'T2', value: 5000000 },
-        { label: 'T3', value: 0 },
-      ],
-    },
-    {
-      type: 'combinedpoints',
-      wpoint: {
-        title: 'W-point',
-        points: 850,
-        label: 'Đổi điểm',
-        bgColor: 'linear-gradient(135deg, #ffb3d9 0%, #ff8cc5 100%)',
-        image: 'images/W-Point.png',
-      },
-      cardpoint: {
-        title: 'Card-point',
-        points: 0,
-        label: 'Đổi điểm',
-        bgColor: 'linear-gradient(135deg, #8dd4ff 0%, #5eb8ff 100%)',
-        image: 'images/Card-point.png',
-      },
-    },
-  ] as const;
+  // Phần tài chính (tổng quan + biểu đồ 12 tháng) được dựng ĐỘNG theo tháng hiện
+  // tại trong buildFinancialCards() (gọi ở constructor). Thẻ điểm thưởng giữ nguyên.
+  financialCards: FinancialCard[] = [];
 
   // Bottom navigation visibility
   showFinancialOverview = signal(true);
@@ -184,12 +127,82 @@ export class HomeComponent implements OnInit, OnDestroy {
     return allValues.length > 0 ? Math.max(...allValues) : 1;
   });
 
+  /** Giá trị lớn nhất trong thẻ tổng quan -> scale chiều cao cột (cột cao nhất = 100%). */
+  get overviewMax(): number {
+    const c = this.financialCards[0];
+    if (!c || c.type !== 'overview') return 1;
+    return Math.max(c.income, c.savings, c.expenses, 1);
+  }
+
+  /**
+   * Dựng phần tài chính ĐỘNG theo tháng hiện tại:
+   *  - Thẻ tổng quan: nhãn tháng = tháng hiện tại; Thu nhập/Chi tiêu tính từ giao dịch tháng đó.
+   *  - Biểu đồ: 12 tháng gần nhất (kết thúc ở tháng hiện tại), số liệu tính từ giao dịch.
+   * Quy ước: amount > 0 = tiền vào (thu nhập), amount < 0 = tiền ra (chi tiêu).
+   */
+  private buildFinancialCards(): FinancialCard[] {
+    const txns = this.data.getAllTransactions();
+    const now = new Date();
+    const curY = now.getFullYear();
+    const curM = now.getMonth(); // 0-11
+
+    const ymOf = (iso: string) => iso.slice(0, 7);                                  // 'YYYY-MM' của giao dịch
+    const ymKey = (y: number, m0: number) => `${y}-${String(m0 + 1).padStart(2, '0')}`;
+    const sumIn = (key: string) =>
+      txns.filter(t => ymOf(t.dateISO) === key && t.amount > 0).reduce((s, t) => s + t.amount, 0);
+    const sumOut = (key: string) =>
+      txns.filter(t => ymOf(t.dateISO) === key && t.amount < 0).reduce((s, t) => s + Math.abs(t.amount), 0);
+
+    // 1) Tổng quan tháng hiện tại
+    const curKey = ymKey(curY, curM);
+    const overview: FinancialOverviewCard = {
+      type: 'overview',
+      title: `Tổng quan tài chính VND ${String(curM + 1).padStart(2, '0')}/${curY}`,
+      income: sumIn(curKey),
+      savings: 0, // chưa có nguồn dữ liệu "tiết kiệm" riêng -> giữ 0 như trước
+      expenses: sumOut(curKey),
+    };
+
+    // 2) Biểu đồ 12 tháng gần nhất (kết thúc ở tháng hiện tại)
+    const months: { y: number; m0: number }[] = [];
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(curY, curM - i, 1); // new Date tự xử lý khi tràn về năm trước
+      months.push({ y: d.getFullYear(), m0: d.getMonth() });
+    }
+    const fmt = (o: { y: number; m0: number }) => `${String(o.m0 + 1).padStart(2, '0')}/${o.y}`;
+    const timeseries: TimeSeriesCard = {
+      type: 'timeseries',
+      title: '',
+      dateRange: `${fmt(months[0])}~${fmt(months[11])}`,
+      expenseData: months.map(({ y, m0 }) => ({ label: `T${m0 + 1}`, value: sumOut(ymKey(y, m0)) })),
+      incomeData: months.map(({ y, m0 }) => ({ label: `T${m0 + 1}`, value: sumIn(ymKey(y, m0)) })),
+    };
+
+    // 3) Điểm thưởng (giữ nguyên)
+    const points: CombinedPointCard = {
+      type: 'combinedpoints',
+      wpoint: {
+        title: 'W-point', points: 850, label: 'Đổi điểm',
+        bgColor: 'linear-gradient(135deg, #ffb3d9 0%, #ff8cc5 100%)',
+        image: 'images/W-Point.png',
+      },
+      cardpoint: {
+        title: 'Card-point', points: 0, label: 'Đổi điểm',
+        bgColor: 'linear-gradient(135deg, #8dd4ff 0%, #5eb8ff 100%)',
+        image: 'images/Card-point.png',
+      },
+    };
+
+    return [overview, timeseries, points];
+  }
+
   constructor(
     private data: MockDataService,
     private router: Router,
     private auth: AuthService,
   ) {
     this.accounts = this.data.getAccounts();
+    this.financialCards = this.buildFinancialCards();
   }
 
   ngOnInit() {
@@ -267,6 +280,18 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onFeature(f: any) {
     if (f.action === 'tx') this.showAccountPicker.set(true);
+    else if (f.action === 'transfer') this.goToTransfer();
+  }
+
+  /** Chuyển tiền -> trang chuyển tiền của tài khoản chính */
+  goToTransfer() {
+    const id = this.accounts[0]?.id;
+    if (id) this.router.navigate(['/transactions', id, 'transfer']);
+  }
+
+  /** Nút QR ở giữa thanh dưới -> màn quét QR */
+  goToQrScan() {
+    this.router.navigateByUrl('/qr-scan');
   }
 
   closeAccountPicker() {

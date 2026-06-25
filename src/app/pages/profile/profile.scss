@@ -1,15 +1,25 @@
 .profile {
   background: #f0f2f8;
-  min-height: var(--app-height, 100dvh);
-  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  /* Cao cố định = màn hình, chia 2 phần: blue-zone (top bar + hero) đứng yên,
+     phần settings cuộn -> top bar giữ nguyên, chỉ phần giữa vuốt được. */
+  height: 100vh;                     /* fallback */
+  height: max(100vh, 100dvh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   position: relative;
 
   .blue-zone {
+    flex-shrink: 0;   /* top bar + hero giữ nguyên, không co lại khi nội dung dài */
     background: url('../../../images/Big_background_won_light.png') no-repeat center top,
       linear-gradient(160deg, #5b8fff 0%, #3a6be0 100%);
     background-size: 120% auto;
+    /* Cho ảnh nền (hoa văn WON) phủ cả vùng padding trên -> tràn lên notch/tai thỏ */
+    background-origin: border-box;
     border-radius: 0 0 40px 40px;
-    padding: 0 16px 24px;
+    /* padding-top = safe-area: nội dung (back + "Cài đặt") nằm dưới notch,
+       còn nền xanh + hoa văn vẫn phủ kín vùng notch nhờ background-origin trên */
+    padding: env(safe-area-inset-top) 16px 24px;
   }
 
   .profile-header {
@@ -162,6 +172,10 @@
   }
 
   .profile-content {
+    flex: 1;                          /* phần settings lấp đầy chỗ còn lại dưới hero */
+    min-height: 0;                    /* cho phép co để overflow-y cuộn (flexbox) */
+    overflow-y: auto;                 /* CHỈ phần này cuộn; hero/top bar đứng yên */
+    -webkit-overflow-scrolling: touch;
     padding: 16px 16px 0;
 
     .settings-section {
@@ -307,6 +321,8 @@
       gap: 8px;
       border-radius: 8px;
       box-shadow: none !important;
+      /* Khoảng cách đáy khi cuộn tới cuối (tránh home indicator) */
+      margin-bottom: calc(24px + env(safe-area-inset-bottom));
 
       mat-icon {
         font-size: 20px;

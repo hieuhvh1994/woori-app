@@ -105,7 +105,14 @@ export class PasskeyService {
     const credIdStr = localStorage.getItem(LS_CRED_KEY);
 
     const allowCredentials: PublicKeyCredentialDescriptor[] = credIdStr
-      ? [{ type: 'public-key', id: base64urlToBuffer(credIdStr) }]
+      ? [{
+          type: 'public-key',
+          id: base64urlToBuffer(credIdStr),
+          // Báo cho iOS biết passkey nằm NGAY trên thiết bị này (Face ID/Touch ID),
+          // không phải ở thiết bị khác -> iOS bỏ bớt nhánh "Tùy chọn khác"
+          // (quét QR / khóa bảo mật), bấm là đi thẳng tới Face ID gọn hơn.
+          transports: ['internal'],
+        }]
       : [];
 
     const assertion = await navigator.credentials.get({

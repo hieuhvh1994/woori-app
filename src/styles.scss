@@ -22,11 +22,18 @@ app-root {
 html.notch-blue {
   background: #5a9cf8 !important;
 }
+/* Màn login: chính nền của .login (xanh + hoa văn WON) đã phủ kín vùng notch,
+   nên KHÔNG tô xanh cho body nữa. Giữ body trắng để nếu chiều cao có hụt một
+   chút ở đáy thì là khoảng trắng liền mạch với panel, không phải dải xanh lộ ra. */
 
 .app-shell {
   max-width: none;
   margin: 0 auto;
-  min-height: var(--app-height, 100dvh);
+  /* Fallback cho trình duyệt cũ không hỗ trợ dvh / max() */
+  min-height: 100vh;
+  /* Lấy giá trị LỚN hơn giữa dynamic viewport (100dvh) và --app-height (JS)
+     -> không bao giờ hụt chiều cao, tránh khe trắng dưới đáy màn hình */
+  min-height: max(100dvh, var(--app-height, 100dvh));
   overflow: visible;
   background: #fff;
   position: relative;

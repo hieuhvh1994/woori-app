@@ -1,0 +1,159 @@
+.my-qr {
+  height: 100vh;
+  height: max(100vh, 100dvh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: linear-gradient(180deg, #7fb1f7 0%, #6aa1f5 100%);
+  box-sizing: border-box;
+
+  // ── Top bar (xanh, phủ lên notch) ──
+  .topbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(env(safe-area-inset-top) + 8px) 8px 14px;
+
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; color: #fff; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      mat-icon { font-size: 28px; width: 28px; height: 28px; }
+      &.placeholder { pointer-events: none; }
+    }
+    .title { flex: 1; text-align: center; font-size: 18px; font-weight: 700; color: #fff; margin: 0; }
+  }
+
+  // ── Sheet trắng (cuộn được) ──
+  .sheet {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    border-radius: 24px 24px 0 0;
+    padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  // ── Bank badges ──
+  .bank-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 22px;
+
+    .badge {
+      display: flex; align-items: center;
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+
+      .bl { width: auto; display: block; }
+      .bl.woori { height: 18px; }
+      .bl.vietqr { height: 22px; }
+    }
+  }
+
+  // ── QR ──
+  .qr-wrap {
+    position: relative;
+    width: min(62vw, 250px);
+    aspect-ratio: 1 / 1;
+    margin-bottom: 12px;
+
+    .qr { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+    .qr.placeholder { background: #f2f4f7; border-radius: 8px; }
+
+    .qr-logo {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 26%;
+      aspect-ratio: 1 / 1;
+      background: #fff;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 4px #fff;
+      img { width: 78%; height: 78%; object-fit: contain; }
+    }
+  }
+
+  .napas-logo {
+    height: 16px;          /* ảnh đã cắt sạch lề -> chữ lấp đầy, để nhỏ lại cho cân */
+    width: auto;
+    display: block;
+    margin-bottom: 22px;
+  }
+
+  // ── Info cards ──
+  .info-card {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #eef0f4;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    text-align: left;
+
+    .label { font-size: 15px; color: #9aa0aa; line-height: 1.3; }
+    .value {
+      display: flex; align-items: center; gap: 2px;
+      font-size: 18px; font-weight: 800; color: #3a7bd5;
+      mat-icon { font-size: 22px; width: 22px; height: 22px; color: #9aa0aa; }
+    }
+
+    &.row-btn { border: 1px solid #eef0f4; cursor: pointer; -webkit-tap-highlight-color: transparent; &:active { background: #f7f9fc; } }
+  }
+
+  .add-amount {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: #fff;
+    border: 1px solid #eef0f4;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    padding: 16px;
+    margin-bottom: 26px;
+    color: #9aa0aa;
+    font-size: 16px; font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    mat-icon { font-size: 24px; width: 24px; height: 24px; color: #4d7cff; }
+    &:active { background: #f7f9fc; }
+  }
+
+  // ── Actions ──
+  .actions {
+    display: flex;
+    gap: 64px;
+    margin-top: auto;
+    padding-top: 8px;
+
+    .act {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      background: none; border: none; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+
+      .act-ico {
+        width: 52px; height: 52px; border-radius: 14px;
+        border: 1.5px solid #d6dbe3;
+        display: flex; align-items: center; justify-content: center;
+        mat-icon { font-size: 24px; width: 24px; height: 24px; color: #5b6470; }
+      }
+      .act-lbl { font-size: 14px; color: #5b6470; }
+      &:active .act-ico { background: #f3f5f9; }
+    }
+  }
+}

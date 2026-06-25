@@ -18,5 +18,7 @@ export const routes: Routes = [
   { path: 'transactions/:accountId', component: TransactionsComponent, canActivate: [authGuard] },
   { path: 'transactions/:accountId/detail/:txnId', loadComponent: () => import('./pages/transaction-detail/transaction-detail').then(m => m.TransactionDetailComponent), canActivate: [authGuard] },
   { path: 'transactions/:accountId/transfer', loadComponent: () => import('./pages/transfer/transfer').then(m => m.TransferComponent), canActivate: [authGuard] },
+  { path: 'qr-scan', loadComponent: () => import('./pages/qr-scan/qr-scan').then(m => m.QrScanComponent), canActivate: [authGuard] },
+  { path: 'my-qr', loadComponent: () => import('./pages/my-qr/my-qr').then(m => m.MyQrComponent), canActivate: [authGuard] },
   { path: '**', redirectTo: '' },
 ];

@@ -314,10 +314,20 @@ export class MockDataService {
       accountId: '100150765538',
       dateISO: '2026-06-25', timeStr: '14:28:28',
       title: 'LG CNS Vietnam Salary', amount: 47011720,
-      refNo: '24042026000018', channel: 'Auto Transfer', transferNote: 'LG CNS Vietnam Salary',
+      refNo: '20260625000027', channel: 'Auto Transfer', transferNote: 'LG CNS Vietnam Salary',
       senderName: '', senderAccount: '', senderBank: 'WOORI BANK',
       receiverName: 'DAO DUY HIEU', receiverAccount: '100150765538', receiverBank: 'WOORI BANK',
       showSender: false, showReceiver: true
+    },
+    {
+      id: 't27',
+      accountId: '100150765538',
+      dateISO: '2026-06-25', timeStr: '23:01:01',
+      title: 'DAO DUY HIEU', amount: -13000000,
+      refNo: '20260625000028', channel: 'Auto Transfer', transferNote: 'DAO DUY HIEU chuyen tien',
+      senderName: 'DAO DUY HIEU', senderAccount: '100150765538', senderBank: 'WOORI BANK',
+      receiverName: 'DAO DUY HIEU', receiverAccount: '0181003556697', receiverBank: 'Vietcombank (VCB)',
+      showSender: true, showReceiver: true
     },
   ];
   private computedBalance(accountId: string): number {
@@ -335,6 +345,10 @@ export class MockDataService {
     const a = this.accounts.find(a => a.id === id);
     if (!a) return undefined;
     return { ...a, balance: this.computedBalance(id) };
+  }
+  /** Toàn bộ giao dịch (mọi tài khoản) – dùng cho thống kê tổng quan tài chính. */
+  getAllTransactions(): Txn[] {
+    return [...this.txns];
   }
   getTransactions(accountId: string): Txn[] {
     const toDateTime = (t: Txn) => `${t.dateISO}T${t.timeStr ?? '00:00:00'}`;

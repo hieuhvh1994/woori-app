@@ -1,7 +1,8 @@
 .transfer-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  min-height: 100vh;                 /* fallback trình duyệt cũ */
+  min-height: max(100vh, 100dvh);    /* phủ kín màn hình kể cả vùng home indicator (PWA standalone) -> không lộ dải trắng dưới đáy */
   background: #f0f2f8;
   position: relative;
 

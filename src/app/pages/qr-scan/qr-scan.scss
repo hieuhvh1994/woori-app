@@ -1,0 +1,163 @@
+.qr-scan {
+  height: 100vh;
+  height: max(100vh, 100dvh);
+  background: #2c2723;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: env(safe-area-inset-top) 20px calc(env(safe-area-inset-bottom) + 16px);
+
+  // ── Top bar ──
+  .topbar {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0 4px;
+    flex-shrink: 0;
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      mat-icon { font-size: 28px; width: 28px; height: 28px; }
+      &.placeholder { pointer-events: none; }
+    }
+
+    .title { font-size: 18px; font-weight: 600; margin: 0; }
+  }
+
+  // ── Brand row (VietQR | Woori Bank) ──
+  .brand-row {
+    margin: 18px 0 6px;
+    flex-shrink: 0;
+  }
+
+  // ── Viewfinder ──
+  .viewfinder {
+    position: relative;
+    width: min(74vw, 300px);
+    aspect-ratio: 1 / 1;
+    margin: auto 0;
+    border-radius: 22px;
+    flex-shrink: 0;
+
+    .cam {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 22px;
+      background: #000;
+      display: block;
+    }
+    .cam-error {
+      width: 100%; height: 100%;
+      border-radius: 22px;
+      background: #1a1714;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+      color: rgba(255,255,255,.6);
+      mat-icon { font-size: 40px; width: 40px; height: 40px; }
+      span { font-size: 13px; }
+    }
+
+    .corner {
+      position: absolute;
+      width: 34px; height: 34px;
+      border: 4px solid #fff;
+      &.tl { top: -3px; left: -3px; border-right: 0; border-bottom: 0; border-top-left-radius: 18px; }
+      &.tr { top: -3px; right: -3px; border-left: 0; border-bottom: 0; border-top-right-radius: 18px; }
+      &.bl { bottom: -3px; left: -3px; border-right: 0; border-top: 0; border-bottom-left-radius: 18px; }
+      &.br { bottom: -3px; right: -3px; border-left: 0; border-top: 0; border-bottom-right-radius: 18px; }
+    }
+
+    .plus {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px; width: 40px; height: 40px;
+      color: rgba(255,255,255,.95);
+    }
+  }
+
+  // ── Payment networks ──
+  .pay-row {
+    margin: 14px 0 18px;
+    flex-shrink: 0;
+  }
+
+  // ── Logo bar: logo chuyển TRẮNG đặt thẳng trên nền tối (giống ảnh gốc) ──
+  // filter brightness(0) invert(1): mọi pixel đục -> trắng, giữ nền trong suốt.
+  .logo-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+
+    .lg {
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+    .lg.vietqr { height: 22px; }
+    .lg.woori { height: 16px; }
+    .d { width: 1px; height: 20px; background: rgba(255, 255, 255, .45); }
+
+    // Logo đã được cắt sạch lề (vietqr_trim/Napas247_trim/vnpay_trim) -> chữ lấp
+    // đầy khung, chỉ cần cùng height là 3 logo cân nhau về cỡ chữ.
+    &.small {
+      gap: 14px;
+      .lg.vietqr { height: 17px; } // có ký hiệu ™ phía trên nên để nhỉnh hơn chút
+      .lg.napas  { height: 15px; }
+      .lg.vnpay  { height: 16px; } // có icon thẻ nên chữ thấp hơn ảnh một chút
+      .d { height: 16px; }
+    }
+  }
+
+  // ── Action pills ──
+  .action-row {
+    display: flex;
+    gap: 12px;
+    align-self: stretch;
+    flex-shrink: 0;
+
+    .pill {
+      flex: 1;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      &:active { background: rgba(255,255,255,.16); }
+    }
+  }
+
+  // ── Gallery ──
+  .gallery {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    mat-icon { font-size: 22px; width: 22px; height: 22px; }
+  }
+}

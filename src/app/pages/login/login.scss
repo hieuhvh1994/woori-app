@@ -1,26 +1,24 @@
 .login {
-  min-height: var(--app-height, 100dvh);
+  /* Fallback cho trình duyệt cũ không hỗ trợ dvh/max() */
+  min-height: 100vh;
+  /* Ở PWA standalone, 100vh = TOÀN màn hình (kể cả vùng home indicator),
+     không bị trừ như dvh/--app-height -> panel phủ kín tới đáy, không lộ dải
+     xanh; các nút nằm ngay trên home indicator. Lấy max để chắc chắn không hụt. */
+  min-height: max(100vh, 100dvh);
   box-sizing: border-box;
   background: url('../../../images/Big_background_won_light.png') no-repeat center top,
   #5a9cf8;
   background-size: 150% auto;
+  /* Cho ảnh nền (hoa văn WON) phủ cả vùng padding phía trên
+     -> hoa văn tràn liền mạch lên vùng notch / "tai thỏ" như thiết kế */
+  background-origin: border-box;
   display: flex;
   flex-direction: column;
+  /* padding-top chỉ đẩy NỘI DUNG xuống dưới notch; ảnh nền vẫn phủ kín phía trên
+     nhờ background-origin: border-box ở trên */
   padding-top: env(safe-area-inset-top);
   padding-bottom: 0;
   position: relative;
-
-  // Phủ màu xanh lên vùng notch/status bar (tai thỏ) trên iOS Safari
-  &::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: env(safe-area-inset-top);
-    background: #5a9cf8;
-    z-index: 9999;
-  }
 
   --bgBlue: #5a8cf6;
 
