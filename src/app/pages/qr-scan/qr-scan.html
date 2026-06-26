@@ -48,11 +48,11 @@
   <!-- Actions -->
   <div class="action-row">
     <button class="pill" (click)="goToMyQr()">QR của tôi</button>
-    <button class="pill">Lịch sử thanh toán</button>
+    <button class="pill" (click)="maintenance.comingSoon()">Lịch sử thanh toán</button>
   </div>
 
   <!-- Gallery -->
-  <button class="gallery">
+  <button class="gallery" (click)="maintenance.comingSoon()">
     <mat-icon>collections</mat-icon>
     <span>Thư viện ảnh</span>
   </button>

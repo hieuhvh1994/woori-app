@@ -5,6 +5,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MaintenanceService } from '../../core/maintenance';
 
 /**
  * Màn "Quét mã QR" – hiển thị camera sau trong khung ngắm.
@@ -20,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class QrScanComponent implements AfterViewInit, OnDestroy {
   private router = inject(Router);
+  readonly maintenance = inject(MaintenanceService);
 
   @ViewChild('video') videoRef?: ElementRef<HTMLVideoElement>;
 

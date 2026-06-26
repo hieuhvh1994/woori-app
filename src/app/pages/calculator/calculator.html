@@ -1,0 +1,61 @@
+<div class="calc">
+  <div class="topbar">
+    <button class="icon-btn" (click)="back()" aria-label="Quay lại">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <h1 class="title">Công cụ tính lãi</h1>
+    <span class="icon-btn placeholder"></span>
+  </div>
+
+  <div class="body">
+    <!-- Tab chính -->
+    <div class="main-tabs">
+      <button class="mtab" [class.active]="mainTab === 'savings'" (click)="setMain('savings')">Tiết kiệm</button>
+      <span class="vdiv"></span>
+      <button class="mtab" [class.active]="mainTab === 'loan'" (click)="setMain('loan')">Vay</button>
+    </div>
+
+    <!-- Toggle kiểu tính -->
+    <div class="sub-toggle">
+      @for (s of subTabs; track s.key) {
+        <button class="stab" [class.active]="subTab === s.key" (click)="subTab = s.key">{{ s.label }}</button>
+      }
+    </div>
+
+    <!-- Nhập liệu -->
+    <div class="field-amount">
+      <span class="field-label">{{ mainTab === 'loan' ? 'Số tiền vay' : 'Số tiền' }}</span>
+      <div class="amount-row">
+        <button class="currency" type="button" (click)="maintenance.comingSoon()">VND <mat-icon>arrow_drop_down</mat-icon></button>
+        <input class="num-input amount" type="text" inputmode="numeric" placeholder="0"
+               [ngModel]="amountInput" (ngModelChange)="onAmountChange($event)" />
+      </div>
+    </div>
+
+    <div class="field-inline">
+      <span class="field-label">Lãi suất</span>
+      <input class="num-input" type="text" inputmode="decimal" placeholder="0" [(ngModel)]="rateInput" />
+      <span class="unit">%</span>
+    </div>
+
+    <div class="field-inline">
+      <span class="field-label">Kỳ hạn</span>
+      <input class="num-input" type="text" inputmode="numeric" placeholder="0" [(ngModel)]="termInput" />
+      <span class="unit">tháng</span>
+    </div>
+
+    <!-- Kết quả -->
+    <div class="result">
+      <div class="r-row">
+        <span class="r-label">Tiền lãi</span>
+        <span class="r-value">VND <b>{{ result.interest | number:'1.0-0' }}</b></span>
+      </div>
+      <div class="r-row">
+        <span class="r-label">{{ mainTab === 'loan' ? 'Tổng số tiền gốc + lãi' : 'Tổng tiền nhận được sau tất toán' }}</span>
+        <span class="r-value blue">VND <b>{{ result.total | number:'1.0-0' }}</b></span>
+      </div>
+    </div>
+
+    <p class="disclaimer">Công cụ tính lãi chỉ mang tính chất tham khảo</p>
+  </div>
+</div>

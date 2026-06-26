@@ -1,0 +1,176 @@
+.calc {
+  height: 100vh;
+  height: max(100vh, 100dvh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #eef1f6;
+
+  // ── Top bar ──
+  .topbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(env(safe-area-inset-top) + 8px) 8px 14px;
+    background: #eef1f6;
+
+    .icon-btn {
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; color: #4a4f57; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      mat-icon { font-size: 28px; width: 28px; height: 28px; }
+      &.placeholder { pointer-events: none; }
+    }
+    .title { flex: 1; text-align: center; font-size: 19px; font-weight: 700; color: #3a3f47; margin: 0; }
+  }
+
+  // ── Body (panel trắng bo góc, cuộn được) ──
+  .body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    padding: 22px 20px calc(20px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+  }
+
+  // ── Tab chính ──
+  .main-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 22px;
+
+    .mtab {
+      border: none; background: none; cursor: pointer;
+      font-size: 18px; font-weight: 700; color: #b3b8c2;
+      padding: 4px 26px;
+      -webkit-tap-highlight-color: transparent;
+      &.active { color: #2f6bff; }
+    }
+    .vdiv { width: 1px; height: 22px; background: #d8dce3; }
+  }
+
+  // ── Toggle kiểu tính (segmented) ──
+  .sub-toggle {
+    display: flex;
+    gap: 4px;
+    border: 1px solid #d9dde4;
+    border-radius: 999px;
+    padding: 5px;
+    margin-bottom: 26px;
+
+    .stab {
+      flex: 1;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: #9aa0aa;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 12px 8px;
+      min-height: 48px;
+      cursor: pointer;
+      white-space: pre-line;     // nhãn "Gốc chia đều,\nlãi giảm dần" xuống dòng
+      line-height: 1.2;
+      transition: background .2s, color .2s;
+      -webkit-tap-highlight-color: transparent;
+
+      &.active { background: #b9bdc4; color: #fff; font-weight: 700; }
+    }
+  }
+
+  // ── Nhập liệu ──
+  .field-label { font-size: 15px; color: #9aa0aa; }
+
+  .field-amount {
+    margin-bottom: 22px;
+    .field-label { display: block; margin-bottom: 10px; }
+    .amount-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+
+      .currency {
+        flex-shrink: 0;
+        display: flex; align-items: center; gap: 2px;
+        background: none; border: none; cursor: pointer;
+        color: #2f6bff; font-size: 17px; font-weight: 700;
+        padding: 6px 0;
+        border-bottom: 1px solid #e2e5ea;
+        -webkit-tap-highlight-color: transparent;
+        mat-icon { font-size: 22px; width: 22px; height: 22px; color: #6b7280; }
+      }
+      .num-input.amount {
+        flex: 1;
+        font-size: 22px;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .field-inline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    .field-label { flex-shrink: 0; min-width: 70px; }
+    .num-input { flex: 1; font-size: 18px; font-weight: 700; }
+    .unit { flex-shrink: 0; color: #9aa0aa; font-size: 16px; }
+  }
+
+  .num-input {
+    border: none;
+    border-bottom: 1px solid #e2e5ea;
+    outline: none;
+    background: transparent;
+    text-align: right;
+    color: #2a2f37;
+    padding: 6px 0;
+    min-width: 0;
+    -webkit-appearance: none;
+    &::placeholder { color: #c5cad2; }
+    &:focus { border-bottom-color: #2f6bff; }
+  }
+
+  // ── Kết quả ──
+  .result {
+    background: #f4f6fa;
+    border: 1px solid #eef0f4;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-top: 8px;
+
+    .r-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      &:first-child { border-bottom: 1px solid #e9ecf1; }
+
+      .r-label { font-size: 15px; color: #9aa0aa; line-height: 1.35; }
+      .r-value {
+        flex-shrink: 0;
+        font-size: 15px; color: #6b7280;
+        b { font-weight: 700; }
+        &.blue { color: #2f6bff; }
+      }
+    }
+  }
+
+  .disclaimer {
+    margin-top: auto;
+    padding-top: 28px;
+    text-align: center;
+    font-size: 14px;
+    color: #b3b8c2;
+  }
+}

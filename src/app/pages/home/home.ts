@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MockDataService, Account } from '../../core/mock-data';
 import { AuthService } from '../../core/auth';
 import { SearchOverlayComponent } from '../../components/search-overlay/search-overlay';
+import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav';
+import { MaintenanceService } from '../../core/maintenance';
 
 interface Feature {
   icon?: string;
@@ -61,7 +63,7 @@ type FinancialCard = FinancialOverviewCard | TimeSeriesCard | CombinedPointCard;
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MatIconModule, MatButtonModule, NgOptimizedImage, SearchOverlayComponent, DecimalPipe],
+  imports: [CommonModule, MatIconModule, MatButtonModule, NgOptimizedImage, SearchOverlayComponent, DecimalPipe, BottomNavComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
@@ -92,12 +94,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   features: Feature[] = [
     { image: 'images/Logo_Chuyen_tien.png', label: 'Chuyển tiền', action: 'transfer', bgColor: '#fff5ed' },
-    { image: 'images/Logo_Tiet_kiem.png', label: 'Tiết kiệm', bgColor: '#fef3f4' },
-    { image: 'images/Logo_Vay.png', label: 'Vay', bgColor: '#f0f5ff' },
+    { image: 'images/Logo_Tiet_kiem.png', label: 'Tiết kiệm', action: 'product:tietkiem', bgColor: '#fef3f4' },
+    { image: 'images/Logo_Vay.png', label: 'Vay', action: 'product:vay', bgColor: '#f0f5ff' },
     { image: 'images/Logo_Lich_Su_GIao_dich.png', label: 'Lịch sử\ngiao dịch', action: 'tx', bgColor: '#eef3ff' },
-    { image: 'images/Logo_Nap_tien_dien_thoai.png', label: 'Nạp tiền\nđiện thoại', bgColor: '#f5ecfd' },
-    { image: 'images/Logo_Woori_Ting_ting.png', label: 'Woori\nTing Ting', badge: 'New', bgColor: '#fef3f4' },
-    { image: 'images/Logo_The.png', label: 'Thẻ', bgColor: '#eef7fe' },
+    { image: 'images/Logo_Nap_tien_dien_thoai.png', label: 'Nạp tiền\nđiện thoại', action: 'topup', bgColor: '#f5ecfd' },
+    { image: 'images/Logo_Woori_Ting_ting.png', label: 'Woori\nTing Ting', action: 'notifications', badge: 'New', bgColor: '#fef3f4' },
+    { image: 'images/Logo_The.png', label: 'Thẻ', action: 'product:the', bgColor: '#eef7fe' },
     { image: 'images/Logo_Vietlott.png', label: 'Vietlott SMS', badge: 'Hot', bgColor: '#fcf3f4', action: 'vietlott' },
   ];
 
@@ -200,6 +202,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private data: MockDataService,
     private router: Router,
     private auth: AuthService,
+    private maintenance: MaintenanceService,
   ) {
     this.accounts = this.data.getAccounts();
     this.financialCards = this.buildFinancialCards();
@@ -281,17 +284,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   onFeature(f: any) {
     if (f.action === 'tx') this.showAccountPicker.set(true);
     else if (f.action === 'transfer') this.goToTransfer();
+    else if (f.action === 'notifications') this.router.navigateByUrl('/notifications');
+    else if (f.action === 'topup') this.router.navigateByUrl('/topup');
+    else if (typeof f.action === 'string' && f.action.startsWith('product:')) {
+      // 'product:tietkiem' -> trang Sản phẩm, mở sẵn tab tương ứng
+      this.router.navigate(['/products'], { queryParams: { tab: f.action.split(':')[1] } });
+    }
+    else this.maintenance.comingSoon(); // tính năng chưa có màn (vd Vietlott) -> bảo trì
   }
 
   /** Chuyển tiền -> trang chuyển tiền của tài khoản chính */
   goToTransfer() {
     const id = this.accounts[0]?.id;
     if (id) this.router.navigate(['/transactions', id, 'transfer']);
-  }
-
-  /** Nút QR ở giữa thanh dưới -> màn quét QR */
-  goToQrScan() {
-    this.router.navigateByUrl('/qr-scan');
   }
 
   closeAccountPicker() {

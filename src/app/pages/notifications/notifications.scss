@@ -1,0 +1,86 @@
+.notif {
+  height: 100vh;
+  height: max(100vh, 100dvh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #eef0f3;
+
+  // ── Top bar ──
+  .topbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(env(safe-area-inset-top) + 8px) 12px 14px;
+    background: #eef0f3;
+
+    .icon-btn {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; color: #6b7280; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      mat-icon { font-size: 24px; width: 24px; height: 24px; }
+      &.placeholder { pointer-events: none; }
+    }
+    .title { flex: 1; text-align: center; font-size: 19px; font-weight: 700; color: #3a3f47; margin: 0; }
+  }
+
+  // ── Body (cuộn được) ──
+  .body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    border-radius: 22px 22px 0 0;
+    padding: 18px 20px calc(96px + env(safe-area-inset-bottom));
+  }
+
+  .note {
+    position: relative;
+    font-size: 14px;
+    color: #9aa0aa;
+    margin: 0 0 20px 16px;
+    &::before {
+      content: '•';
+      position: absolute;
+      left: -16px;
+    }
+  }
+
+  // ── Tiêu đề ngày ──
+  .day-header {
+    font-size: 15px;
+    font-weight: 700;
+    color: #3a3f47;
+    padding: 10px 0 12px;
+    border-bottom: 1px solid #eef0f3;
+    margin-bottom: 6px;
+  }
+
+  // ── Mục thông báo ──
+  .notif-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid #f4f5f7;
+
+    .ni-left { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .ni-right { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
+
+    .ni-title {
+      font-size: 16px; font-weight: 700; color: #3a7bd5;   // Nhận tiền = xanh
+      &.out { color: #e8607a; }                            // Rút tiền = đỏ
+    }
+    .ni-acc { font-size: 15px; color: #9aa0aa; }
+    .ni-time { font-size: 15px; color: #9aa0aa; }
+    .ni-amount {
+      font-size: 16px; font-weight: 700; color: #2f6bff;   // tiền vào = xanh
+      &.out { color: #e8536e; }                            // tiền ra = đỏ
+    }
+  }
+}

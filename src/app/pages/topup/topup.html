@@ -1,0 +1,114 @@
+<div class="topup">
+  <!-- Blue header -->
+  <div class="blue-zone">
+    <div class="topbar">
+      <button class="icon-btn" (click)="back()" aria-label="Quay lại"><mat-icon>chevron_left</mat-icon></button>
+      <h1 class="title">Nạp tiền điện thoại</h1>
+      <button class="cancel" (click)="back()">Hủy</button>
+    </div>
+  </div>
+
+  <div class="body">
+    <!-- Account card -->
+    <div class="acc-card">
+      <button class="acc-sel" (click)="maintenance.comingSoon()">{{ accountId }} [VND] <mat-icon>chevron_right</mat-icon></button>
+      <div class="bal-row">
+        <span class="bal-label">Số dư khả dụng</span>
+        <span class="bal"><span class="cur">VND</span> {{ balanceStr }}</span>
+      </div>
+      <div class="acc-divider"></div>
+      <button class="guide" (click)="showInfo.set(true)">Hướng dẫn và chú ý <mat-icon>chevron_right</mat-icon></button>
+    </div>
+
+    <!-- Phone -->
+    <div class="field phone">
+      @if (phone) { <span class="field-label">Số điện thoại</span> }
+      <input class="phone-input" type="tel" inputmode="numeric" placeholder="Số điện thoại" [(ngModel)]="phone" />
+      <button class="ic-btn" aria-label="Danh bạ" (click)="maintenance.comingSoon()"><mat-icon>contacts</mat-icon></button>
+    </div>
+
+    <!-- Provider -->
+    <button class="field row" (click)="showProvider.set(true)">
+      <span class="row-label">Nhà cung cấp</span>
+      <span class="row-value">{{ provider() }}</span>
+      <mat-icon class="ic">search</mat-icon>
+    </button>
+
+    <!-- Amount -->
+    <button class="field row" (click)="showAmount.set(true)">
+      <span class="row-label">Số tiền nạp</span>
+      <span class="row-value">{{ amountStr }} VND</span>
+      <mat-icon class="ic">search</mat-icon>
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <button class="next-btn" [disabled]="!phone.trim()" (click)="next()">Tiếp</button>
+  </div>
+
+  <!-- ── Sheet: Hướng dẫn và chú ý ── -->
+  @if (showInfo()) {
+    <div class="backdrop" (click)="showInfo.set(false)"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-title info">Hướng dẫn và chú ý</h2>
+      <div class="info-body">
+        <p>Quý khách có thể nạp tiền điện thoại trả trước, trả sau của các mạng Vinaphone, Mobifone, Viettel, Vietnamobile và Gmobile. (Với số điện thoại trả sau của Vinaphone, vui lòng đăng ký EZPAY với Vinaphone để nạp tiền trực tiếp.)</p>
+        <p>Mệnh giá nạp từ 10,000 VNĐ đến 500,000 VNĐ.</p>
+        <p>Quý khách không thể hủy bỏ giao dịch đã hoàn tất, vì vậy xin vui lòng kiểm tra lại thông tin trước khi thực hiện nạp tiền.</p>
+      </div>
+    </div>
+  }
+
+  <!-- ── Sheet: Chọn nhà cung cấp ── -->
+  @if (showProvider()) {
+    <div class="backdrop" (click)="showProvider.set(false)"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-title">Chọn nhà cung cấp</h2>
+      <div class="grid">
+        @for (p of providers; track p) {
+          <button class="grid-item" [class.active]="provider() === p" (click)="selectProvider(p)">{{ p }}</button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ── Sheet: Chọn số tiền nạp ── -->
+  @if (showAmount()) {
+    <div class="backdrop" (click)="showAmount.set(false)"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h2 class="sheet-title">Vui lòng chọn số tiền nạp</h2>
+      <div class="grid">
+        @for (a of amounts; track a) {
+          <button class="grid-item" [class.active]="amount() === a" (click)="selectAmount(a)">{{ a.toLocaleString('vi-VN') }} VND</button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ── Modal xác nhận ── -->
+  @if (showConfirm()) {
+    <div class="backdrop" (click)="showConfirm.set(false)"></div>
+    <div class="confirm">
+      <div class="confirm-ico"><mat-icon>receipt_long</mat-icon></div>
+      <button class="confirm-close" (click)="showConfirm.set(false)" aria-label="Đóng"><mat-icon>close</mat-icon></button>
+      <h2 class="confirm-title">Số tiền nạp</h2>
+      <div class="confirm-rows">
+        <div class="c-row"><span class="c-label">Mệnh giá</span><span class="c-value blue"><span class="cur">VND</span> {{ amountStr }}</span></div>
+        <div class="c-row"><span class="c-label">Nhà cung cấp thẻ</span><span class="c-value">{{ provider() }}</span></div>
+        <div class="c-row"><span class="c-label">Số điện thoại di động</span><span class="c-value blue">{{ phone }}</span></div>
+        <div class="c-divider"></div>
+        <div class="c-row"><span class="c-label">Tài khoản thanh toán</span><span class="c-value">{{ accountId }}[VND]</span></div>
+      </div>
+      <button class="confirm-btn" (click)="confirm()">Xác nhận</button>
+    </div>
+  }
+
+  <!-- ── Spinner ── -->
+  @if (isLoading()) {
+    <div class="loading-overlay"><div class="spinner"></div></div>
+  }
+</div>

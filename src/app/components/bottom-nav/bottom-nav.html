@@ -1,0 +1,23 @@
+<div class="bottom-nav safe-bottom">
+  <button mat-button class="nav-item" [class.active]="active === 'home'" (click)="go('home')">
+    <mat-icon>home</mat-icon>
+    <span>Trang chủ</span>
+  </button>
+  <button mat-button class="nav-item" [class.active]="active === 'products'" (click)="go('products')">
+    <mat-icon>dashboard</mat-icon>
+    <span>Sản phẩm</span>
+  </button>
+  <button mat-button class="nav-item scan" (click)="go('qr')" aria-label="Quét mã QR">
+    <div class="scan-button">
+      <mat-icon>qr_code_scanner</mat-icon>
+    </div>
+  </button>
+  <button mat-button class="nav-item" [class.active]="active === 'notifications'" (click)="go('notifications')">
+    <mat-icon>notifications</mat-icon>
+    <span>Thông báo</span>
+  </button>
+  <button mat-button class="nav-item" [class.active]="active === 'services'" (click)="go('services')">
+    <mat-icon>menu</mat-icon>
+    <span>Dịch vụ</span>
+  </button>
+</div>

@@ -1,0 +1,74 @@
+<div class="products">
+  <!-- Header + tabs (cố định) -->
+  <div class="head">
+    <h1 class="page-title">Sản phẩm &amp; Dịch vụ</h1>
+    <div class="tabs">
+      @for (t of tabs; track t.key) {
+        <button class="chip" [class.active]="active() === t.key" (click)="selectTab(t.key, $event)">
+          {{ t.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Nội dung cuộn -->
+  <div class="content" #contentEl>
+    @if (active() === 'goiy') {
+      <h2 class="section-title">Sản phẩm gợi ý dành cho bạn!</h2>
+      @for (c of suggestions; track c.title) {
+        <div class="suggest-card" (click)="maintenance.comingSoon()">
+          <span class="cat-badge" [class.loan]="c.badgeType === 'loan'">{{ c.badge }}</span>
+          <h3 class="s-title">{{ c.title }}</h3>
+          <p class="s-desc">{{ c.desc }}</p>
+          <div class="s-rate">
+            <span class="pct-badge"><mat-icon>percent</mat-icon></span>
+            <span class="r-prefix">{{ c.ratePrefix }}</span>
+            <span class="r-value">{{ c.rateValue }}</span>
+            @if (c.rateSuffix) { <span class="r-suffix">{{ c.rateSuffix }}</span> }
+          </div>
+          <img class="s-img" [src]="c.image" [alt]="c.title" />
+        </div>
+      }
+    } @else {
+      @if (currentList().length) {
+        @for (c of currentList(); track c.title) {
+          <div class="list-card" [class.no-icon]="!c.icon && !c.matIcon" (click)="maintenance.comingSoon()">
+            @if (c.icon || c.matIcon) {
+              <span class="l-icon">
+                @if (c.icon) {
+                  <img [src]="c.icon" [alt]="c.title" />
+                } @else {
+                  <mat-icon>{{ c.matIcon }}</mat-icon>
+                }
+              </span>
+            }
+            <div class="l-body">
+              <h3 class="l-title">{{ c.title }}</h3>
+              <p class="l-desc">{{ c.desc }}</p>
+            </div>
+            @if (c.rateValue) {
+              <div class="l-rate">
+                <span class="l-rate-label">{{ c.rateLabel }}</span>
+                <span class="l-rate-pill">{{ c.rateValue }}</span>
+              </div>
+            } @else if (c.chevron) {
+              <mat-icon class="l-chevron">chevron_right</mat-icon>
+            }
+          </div>
+        }
+      } @else {
+        <div class="empty">
+          <mat-icon>inventory_2</mat-icon>
+          <span>Sản phẩm đang được cập nhật</span>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Nút máy tính lãi suất -->
+  <button class="calc-fab" aria-label="Máy tính lãi suất" (click)="goCalc()">
+    <mat-icon>calculate</mat-icon>
+  </button>
+
+  <app-bottom-nav active="products"></app-bottom-nav>
+</div>

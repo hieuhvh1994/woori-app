@@ -1,0 +1,213 @@
+.products {
+  height: 100vh;
+  height: max(100vh, 100dvh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #e8f1ff 0%, #f4f8fd 22%, #f4f8fd 100%);
+
+  // ── Header + tabs (cố định) ──
+  .head {
+    flex-shrink: 0;
+    padding-top: calc(env(safe-area-inset-top) + 8px);
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #565b63;
+      margin: 8px 20px 16px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 0 16px 6px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
+
+      .chip {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        border: none;
+        border-radius: 999px;
+        padding: 12px 20px;
+        background: #e7ebf2;
+        color: #8a909a;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: background .2s, color .2s;
+
+        &.active { background: #2f6bff; color: #fff; }
+      }
+    }
+  }
+
+  // ── Nội dung cuộn ──
+  .content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 16px calc(96px + env(safe-area-inset-bottom));
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #17a0c4;
+      margin: 6px 4px 16px;
+    }
+  }
+
+  // ── Thẻ "Gợi ý" ──
+  .suggest-card {
+    position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px 18px 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .05);
+    overflow: hidden;
+
+    .cat-badge {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #e0901b;
+      background: #fdf2e2;
+      border-radius: 999px;
+      padding: 6px 14px;
+      margin-bottom: 14px;
+      &.loan { color: #e8536e; background: #fdeef0; }
+    }
+
+    .s-title { font-size: 20px; font-weight: 700; color: #2a2f37; margin: 0 0 8px; max-width: 72%; }
+    .s-desc { font-size: 14px; color: #9aa0aa; line-height: 1.5; white-space: pre-line; margin: 0 0 18px; max-width: 70%; }
+
+    .s-rate {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 16px;
+      color: #5b6470;
+
+      .pct-badge {
+        width: 24px; height: 24px; border-radius: 50%;
+        background: #2ec5c0;
+        display: flex; align-items: center; justify-content: center;
+        margin-right: 4px;
+        mat-icon { font-size: 15px; width: 15px; height: 15px; color: #fff; }
+      }
+      .r-value {
+        font-weight: 700; font-size: 18px;
+        background: linear-gradient(90deg, #7a5cff 0%, #e0529b 100%);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+    }
+
+    .s-img {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 112px;
+      height: 112px;
+      object-fit: contain;
+      pointer-events: none;
+    }
+  }
+
+  // ── Thẻ danh sách (tài khoản / tiết kiệm / vay ...) ──
+  .list-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, .04);
+
+    .l-icon {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      img { width: 100%; height: 100%; object-fit: contain; }
+      mat-icon { font-size: 34px; width: 34px; height: 34px; color: #5b8fff; }
+    }
+
+    .l-body {
+      flex: 1;
+      min-width: 0;
+      .l-title { font-size: 17px; font-weight: 700; color: #2f6bff; margin: 0 0 4px; line-height: 1.25; }
+      .l-desc {
+        font-size: 13px; color: #9aa0aa; line-height: 1.45; margin: 0;
+        white-space: pre-line;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;          // mô tả dài -> cắt 2 dòng (...)
+        overflow: hidden;
+      }
+    }
+
+    .l-rate {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      .l-rate-label { font-size: 12px; color: #9aa0aa; }
+      .l-rate-pill {
+        background: #9aa0aa; color: #fff;
+        font-weight: 700; font-size: 14px;
+        border-radius: 8px; padding: 6px 12px;
+        white-space: nowrap;
+      }
+    }
+
+    .l-chevron {
+      flex-shrink: 0;
+      color: #c4cbd4;
+      font-size: 26px; width: 26px; height: 26px;
+    }
+  }
+
+  // ── Trạng thái trống ──
+  .empty {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    padding: 70px 0; color: #aeb4bd;
+    mat-icon { font-size: 46px; width: 46px; height: 46px; }
+    span { font-size: 15px; }
+  }
+
+  // ── Nút máy tính nổi ──
+  .calc-fab {
+    position: fixed;
+    right: 18px;
+    bottom: calc(96px + env(safe-area-inset-bottom));
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: none;
+    /* Bán trong suốt + làm mờ nền phía sau (frosted) -> nút trong/mờ hơn */
+    background: rgba(118, 124, 134, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 90;
+    -webkit-tap-highlight-color: transparent;
+    transition: background .15s;
+    &:active { background: rgba(118, 124, 134, 0.65); }
+    mat-icon { font-size: 28px; width: 28px; height: 28px; }
+  }
+}

@@ -292,26 +292,4 @@
   </div>
 }
 
-<div class="bottom-nav safe-bottom">
-  <button mat-button class="nav-item active">
-    <mat-icon>home</mat-icon>
-    <span>Trang chủ</span>
-  </button>
-  <button mat-button class="nav-item">
-    <mat-icon>dashboard</mat-icon>
-    <span>Sản phẩm</span>
-  </button>
-  <button mat-button class="nav-item scan" (click)="goToQrScan()">
-    <div class="scan-button">
-      <mat-icon>qr_code_scanner</mat-icon>
-    </div>
-  </button>
-  <button mat-button class="nav-item">
-    <mat-icon>notifications</mat-icon>
-    <span>Thông báo</span>
-  </button>
-  <button mat-button class="nav-item">
-    <mat-icon>menu</mat-icon>
-    <span>Dịch vụ</span>
-  </button>
-</div>
+<app-bottom-nav active="home"></app-bottom-nav>

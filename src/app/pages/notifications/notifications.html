@@ -1,0 +1,29 @@
+<div class="notif">
+  <div class="topbar">
+    <span class="icon-btn placeholder"></span>
+    <h1 class="title">Thông báo</h1>
+    <button class="icon-btn" aria-label="Cài đặt" (click)="maintenance.comingSoon()"><mat-icon>settings</mat-icon></button>
+  </div>
+
+  <div class="body">
+    <p class="note">Chỉ hiện thông báo của 7 ngày gần nhất</p>
+
+    @for (g of groups; track g.date) {
+      <div class="day-header">{{ g.weekday }}</div>
+      @for (n of g.items; track n.id) {
+        <div class="notif-item">
+          <div class="ni-left">
+            <span class="ni-title" [class.out]="n.isOut">{{ n.title }}</span>
+            <span class="ni-acc">{{ n.account }}</span>
+          </div>
+          <div class="ni-right">
+            <span class="ni-time">{{ n.time }}</span>
+            <span class="ni-amount" [class.out]="n.isOut">VND {{ n.amountStr }}</span>
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <app-bottom-nav active="notifications"></app-bottom-nav>
+</div>

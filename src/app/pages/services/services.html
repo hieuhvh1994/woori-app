@@ -1,0 +1,57 @@
+<div class="services">
+  <!-- Header -->
+  <div class="header">
+    <div class="profile-row">
+      <span class="avatar"><mat-icon>person</mat-icon></span>
+      <div class="who">
+        <div class="name">{{ name }}</div>
+        <div class="recent">Recent {{ recent }}</div>
+      </div>
+      <button class="logout" (click)="logout()">Đăng xuất</button>
+    </div>
+
+    <div class="quick-row">
+      @for (q of quickActions; track q.label) {
+        <button class="quick" (click)="onQuick(q)">
+          <span class="q-ico">
+            <mat-icon>{{ q.icon }}</mat-icon>
+            @if (q.dot) { <span class="dot"></span> }
+          </span>
+          <span class="q-lbl">{{ q.label }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Panel: cột danh mục (cố định) + danh sách dịch vụ (cuộn) -->
+  <div class="panel">
+    <div class="cats">
+      @for (c of categories; track c.key) {
+        <button class="cat" [class.active]="activeCat() === c.key" (click)="activeCat.set(c.key)">
+          <span class="cat-ico"><mat-icon>{{ c.icon }}</mat-icon></span>
+          <span class="cat-lbl">{{ c.label }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="groups">
+      @for (g of current().groups; track g.key) {
+        <div class="group">
+          <button class="group-header" (click)="toggleGroup(g.key)">
+            <span class="group-title">{{ g.title }}</span>
+            <mat-icon class="chev">{{ isCollapsed(g.key) ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+          </button>
+          @if (!isCollapsed(g.key)) {
+            <div class="group-items">
+              @for (it of g.items; track it.label) {
+                <button class="svc-item" (click)="onItem(it)">{{ it.label }}</button>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <app-bottom-nav active="services"></app-bottom-nav>
+</div>

@@ -33,12 +33,12 @@
       <span class="value">{{ name }}</span>
     </div>
 
-    <button class="info-card row-btn">
+    <button class="info-card row-btn" (click)="maintenance.comingSoon()">
       <span class="label">Tài khoản thụ hưởng</span>
       <span class="value">{{ accountId }} <mat-icon>expand_more</mat-icon></span>
     </button>
 
-    <button class="add-amount">
+    <button class="add-amount" (click)="maintenance.comingSoon()">
       <mat-icon>add_circle</mat-icon>
       <span>Thêm số tiền</span>
     </button>

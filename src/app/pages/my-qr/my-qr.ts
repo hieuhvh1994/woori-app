@@ -8,6 +8,7 @@ import * as QRCode from 'qrcode';
 
 import { AuthService } from '../../core/auth';
 import { MockDataService } from '../../core/mock-data';
+import { MaintenanceService } from '../../core/maintenance';
 
 /**
  * Màn "QR của tôi" – sinh mã QR nhận tiền NGAY TRÊN THIẾT BỊ (không gửi
@@ -25,6 +26,7 @@ export class MyQrComponent implements OnInit {
   private router = inject(Router);
   private auth = inject(AuthService);
   private data = inject(MockDataService);
+  readonly maintenance = inject(MaintenanceService);
 
   readonly name = this.auth.username;
   readonly accountId = this.data.getAccounts()[0]?.id ?? '100150765538';
