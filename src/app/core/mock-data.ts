@@ -382,6 +382,16 @@ export class MockDataService {
     {
       id: 't33',
       accountId: '100150765538',
+      dateISO: '2026-08-15', timeStr: '11:27:27',
+      title: 'Int Pay', amount: 589,
+      refNo: '20260718000030', channel: 'Auto Transfer', transferNote: 'Int Pay',
+      senderName: '', senderAccount: '', senderBank: 'WOORI BANK',
+      receiverName: 'DAO DUY HIEU', receiverAccount: '100150765538', receiverBank: 'WOORI BANK',
+      showSender: false, showReceiver: true
+    },
+    {
+      id: 't34',
+      accountId: '100150765538',
       dateISO: '2026-08-25', timeStr: '14:56:56',
       title: 'LG CNS Vietnam Salary', amount: 41499206,
       refNo: '20260724000031', channel: 'Auto Transfer', transferNote: 'LG CNS Vietnam Salary',
