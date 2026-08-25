@@ -379,6 +379,16 @@ export class MockDataService {
       receiverName: 'DAO DUY HIEU', receiverAccount: '0181003556697', receiverBank: 'Vietcombank (VCB)',
       showSender: true, showReceiver: true
     },
+    {
+      id: 't33',
+      accountId: '100150765538',
+      dateISO: '2026-08-25', timeStr: '14:56:56',
+      title: 'LG CNS Vietnam Salary', amount: 41499206,
+      refNo: '20260724000031', channel: 'Auto Transfer', transferNote: 'LG CNS Vietnam Salary',
+      senderName: '', senderAccount: '', senderBank: 'WOORI BANK',
+      receiverName: 'DAO DUY HIEU', receiverAccount: '100150765538', receiverBank: 'WOORI BANK',
+      showSender: false, showReceiver: true
+    },
   ];
   private computedBalance(accountId: string): number {
     const acc = this.accounts.find(a => a.id === accountId);
