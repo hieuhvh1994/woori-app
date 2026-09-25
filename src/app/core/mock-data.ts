@@ -413,7 +413,7 @@ export class MockDataService {
       id: 't36',
       accountId: '100150765538',
       dateISO: '2026-09-25', timeStr: '13:35:35',
-      title: 'LG CNS Vietnam Salary', amount: 42968545,
+      title: 'LG CNS Vietnam Salary', amount: 41968545,
       refNo: '20260925000032', channel: 'Auto Transfer', transferNote: 'LG CNS Vietnam Salary',
       senderName: '', senderAccount: '', senderBank: 'WOORI BANK',
       receiverName: 'DAO DUY HIEU', receiverAccount: '100150765538', receiverBank: 'WOORI BANK',
