@@ -44,7 +44,7 @@ export class MockDataService {
       name: 'Saving Account',
       label: 'Tai khoan thanh toan',
       currency: 'VND',
-      initialBalance: 7000352,
+      initialBalance: 6600352,
       balance: 0,
       masked: 'VND *** ***'
     },
