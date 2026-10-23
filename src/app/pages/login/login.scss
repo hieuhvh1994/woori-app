@@ -246,9 +246,9 @@
       //   height: var(--ios-top-edge-height);
       //   background: #5a9cf8;
       //   z-index: 1;
-
+      // }
       padding-top: max(8px, env(safe-area-inset-top, 0px));
-      }
+  
     }
   }
 }
