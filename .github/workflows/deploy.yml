@@ -35,6 +35,9 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Clear gh-pages cache
+        run: rm -rf node_modules/.cache/gh-pages
+
       - name: Deploy to gh-pages
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
