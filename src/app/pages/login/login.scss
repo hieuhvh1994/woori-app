@@ -227,10 +227,25 @@
 
 }
 
+.ios-top-edge {
+  display:none;
+}
+
 @supports (-webkit-touch-callout: none) {
   @media (display-mode: standalone) {
-    .login .top {
-      padding-top: 23px;
+    .login {
+      --ios-top-edge-height: max(8px, env(safe-area-inset-top, 0px));
+      padding-top: var(--ios-top-edge-height);
+
+      .ios-top-edge {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--ios-top-edge-height);
+        background: #5a9cf8;
+        z-index: 1;
     }
   }
 }
