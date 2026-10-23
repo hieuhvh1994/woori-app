@@ -227,6 +227,14 @@
 
 }
 
+@supports (-webkit-touch-callout: none) {
+  @media (display-mode: standalone) {
+    .login .top {
+      padding-top: 20px;
+    }
+  }
+}
+
 // ── OTP Toast Banner ──
 .otp-toast {
   position: fixed;
