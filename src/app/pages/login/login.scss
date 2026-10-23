@@ -234,6 +234,8 @@
 @supports (-webkit-touch-callout: none) {
   @media (display-mode: standalone) {
     .login {
+
+      padding-top: calc(env(safe-area-inset-top, 0px) + 30px);
       // --ios-top-edge-height: max(8px, env(safe-area-inset-top, 0px));
       // padding-top: var(--ios-top-edge-height);
 
@@ -247,7 +249,6 @@
       //   background: #5a9cf8;
       //   z-index: 1;
       // }
-      padding-top: max(8px, env(safe-area-inset-top, 0px));
   
     }
   }
