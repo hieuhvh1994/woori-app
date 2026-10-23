@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1792764643965,
+  "timestamp": 1792766450093,
   "index": "/woori-app/index.html",
   "assetGroups": [
     {
@@ -150,7 +150,7 @@
     "/woori-app/images/vnpay_trim.png": "be27b4b9bb3889f9a1c4842e54c6a9c00fc6d056",
     "/woori-app/images/won_icon.png": "a8826d17f80d62675c6c8deea159f3135ef0c5fc",
     "/woori-app/images/won_icon_white.png": "090543ab0338adeb764b9aab59420de0e6f0b1b1",
-    "/woori-app/index.html": "0c1dff9d11f4c51fe38a836f68835d0df2523dec",
+    "/woori-app/index.html": "90830964f2c893e9af95c97e10c3bcdecd048884",
     "/woori-app/main-B7WUQLTD.js": "7017659fd69a1f5038a11c48aca5eb25d16c62ee",
     "/woori-app/manifest.webmanifest": "d00f1bb7c54275e658d4e69a6d4b24dbac368f80",
     "/woori-app/scripts-KVQYCYOC.js": "51bdc5fbf84a9705b89f39ad712da0bc9e331e89",
