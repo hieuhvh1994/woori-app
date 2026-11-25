@@ -449,6 +449,36 @@ export class MockDataService {
       receiverName: 'DAO DUY HIEU', receiverAccount: '100150765538', receiverBank: 'WOORI BANK',
       showSender: false, showReceiver: true
     },
+     {
+      id: 't40',
+      accountId: '100150765538',
+      dateISO: '2026-10-24', timeStr: '00:20:20',
+      title: 'DAO DUY HIEU', amount: -42000000,
+      refNo: '20261024000036', channel: 'Auto Transfer', transferNote: 'DAO DUY HIEU chuyen tien',
+      senderName: 'DAO DUY HIEU', senderAccount: '100150765538', senderBank: 'WOORI BANK',
+      receiverName: 'DAO DUY HIEU', receiverAccount: '0181003556697', receiverBank: 'Vietcombank (VCB)',
+      showSender: true, showReceiver: true
+    },
+        {
+      id: 't41',
+      accountId: '100150765538',
+      dateISO: '2026-11-21', timeStr: '11:09:54',
+      title: 'Int Pay', amount: 84,
+      refNo: '20261121000037', channel: 'Auto Transfer', transferNote: 'Int Pay',
+      senderName: '', senderAccount: '', senderBank: 'WOORI BANK',
+      receiverName: 'DAO DUY HIEU', receiverAccount: '100150765538', receiverBank: 'WOORI BANK',
+      showSender: false, showReceiver: true
+    },
+    {
+      id: 't42',
+      accountId: '100150765538',
+      dateISO: '2026-11-25', timeStr: '17:16:31',
+      title: 'LG CNS Vietnam Salary', amount: 42567368,
+      refNo: '20261125000038', channel: 'Auto Transfer', transferNote: 'LG CNS Vietnam Salary',
+      senderName: '', senderAccount: '', senderBank: 'WOORI BANK',
+      receiverName: 'DAO DUY HIEU', receiverAccount: '100150765538', receiverBank: 'WOORI BANK',
+      showSender: false, showReceiver: true
+    },
   ];
   private computedBalance(accountId: string): number {
     const acc = this.accounts.find(a => a.id === accountId);
